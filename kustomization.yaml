@@ -10,3 +10,4 @@ spec:
   sourceRef:
     kind: GitRepository
     name: infra-lakehouse  # Referencia o GitRepository criado
+  targetNamespace: default
