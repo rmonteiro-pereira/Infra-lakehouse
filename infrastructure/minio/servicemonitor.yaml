@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: minio-monitor
+  namespace: minio  # MinIO's namespace
+  labels:
+    app: minio      # Matches Prometheus's selector
+spec:
+  endpoints:
+  - port: metrics   # MinIO exposes metrics on port 9000 by default
+    interval: 30s
+  selector:
+    matchLabels:
+      app: minio

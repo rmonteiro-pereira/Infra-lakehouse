@@ -1,0 +1,9 @@
+# infrastructure/monitoring/grafana.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboards
+  namespace: monitoring
+data:
+  minio.json: |-
+    { "dashboard": { ... } }  # Import MinIO dashboard JSON

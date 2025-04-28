@@ -1,0 +1,54 @@
+# infrastructure/minio/statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: minio
+  namespace: minio  # Isolated namespace
+spec:
+  serviceName: minio
+  replicas: 4  # Distributed mode (4 nodes)
+  selector:
+    matchLabels:
+      app: minio
+  template:
+    metadata:
+      labels:
+        app: minio
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values: [minio]
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - name: minio
+        image: quay.io/minio/minio:latest
+        args:
+        - server
+        - http://minio-{0...3}.minio.minio.svc.cluster.local/data  # DNS for distributed mode
+        env:
+        - name: MINIO_ROOT_USER
+          valueFrom:
+            secretKeyRef:
+              name: minio-secrets
+              key: root-user
+        - name: MINIO_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: minio-secrets
+              key: root-password
+        volumeMounts:
+        - name: storage
+          mountPath: /data
+  volumeClaimTemplates:
+  - metadata:
+      name: storage
+    spec:
+      accessModes: [ReadWriteOnce]
+      resources:
+        requests:
+          storage: 100Gi

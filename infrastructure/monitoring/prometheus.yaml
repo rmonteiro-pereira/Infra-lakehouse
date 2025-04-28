@@ -1,0 +1,16 @@
+# yamllint disable-file
+# infrastructure/monitoring/prometheus.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: prometheus
+  namespace: monitoring
+spec:
+  serviceAccountName: prometheus
+  serviceMonitorSelector:
+    matchLabels:
+      app: minio
+  resources:
+    requests:
+      memory: 2Gi
+      cpu: 500m

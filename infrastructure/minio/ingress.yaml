@@ -1,0 +1,25 @@
+# infrastructure/minio/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minio-ingress
+  namespace: minio
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod  # Requires cert-manager
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+spec:
+  tls:
+  - hosts:
+    - minio.your-domain.com
+    secretName: minio-tls
+  rules:
+  - host: minio.your-domain.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: minio
+            port:
+              number: 9000
