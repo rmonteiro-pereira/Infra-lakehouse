@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: minio
-  namespace: default  # Or your custom namespace
+  namespace: minio  # Or your custom namespace
 spec:
   replicas: 4  # High availability (adjust as needed)
   selector:
