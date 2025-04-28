@@ -5,9 +5,9 @@ metadata:
   namespace: flux-system
 spec:
   interval: 5m  # Verifica mudanças a cada 5 minutos
-  path: "./manifests"  # Pasta no repositório com os manifests
+  path: "./manifests/minio"  # Pasta no repositório com os manifests
   prune: true  # Remove recursos deletados do Git
   sourceRef:
     kind: GitRepository
     name: infra-lakehouse  # Referencia o GitRepository criado
-  targetNamespace: default
+  targetNamespace: minio
