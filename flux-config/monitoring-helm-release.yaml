@@ -23,5 +23,5 @@ spec:
     cleanupOnFail: true
   valuesFrom:
   - kind: ConfigMap
-    name: prometheus-values.yaml
+    name: prometheus-operator-values 
     valuesKey: values.yaml
