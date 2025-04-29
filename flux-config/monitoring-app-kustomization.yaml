@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m
-  path: "./infrastructure/monitoring-app" # POINT TO A NEW PATH
+  path: "./infrastructure/monitoring/monitoring-app" # POINT TO A NEW PATH
   prune: true
   sourceRef:
     kind: GitRepository
