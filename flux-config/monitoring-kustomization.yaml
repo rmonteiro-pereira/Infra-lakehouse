@@ -5,10 +5,10 @@ metadata:
   name: monitoring
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1m
   path: "./infrastructure/monitoring"
   prune: true
   sourceRef:
     kind: GitRepository
-    name: infra-repo
+    name: infra-lakehouse
   targetNamespace: monitoring  # Isolated monitoring ns
