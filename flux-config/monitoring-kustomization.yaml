@@ -21,4 +21,4 @@ spec:
           value:
             kind: ConfigMap
             name: prometheus-operator-values
-            valuesKey: values.yaml
+            valuesKey: prometheus-values.yaml
