@@ -1,0 +1,12 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: monitoring-base # New name
+  namespace: flux-system
+spec:
+  interval: 1m # Can be longer than app
+  path: "./infrastructure/monitoring" # Same path
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: infra-lakehouse

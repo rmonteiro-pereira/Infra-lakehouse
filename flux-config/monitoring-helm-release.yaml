@@ -4,9 +4,9 @@ metadata:
   name: kube-prometheus-stack
   namespace: monitoring
 spec:
-  # dependsOn:             # <-- Add this
-  #   - name: monitoring
-  #     namespace: flux-system 
+  dependsOn:             # <-- Add this
+    - name: monitoring-base
+      namespace: flux-system 
   interval: 1m
   chart:
     spec:
