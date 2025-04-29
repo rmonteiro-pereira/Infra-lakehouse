@@ -14,14 +14,3 @@ spec:
   sourceRef:
     kind: GitRepository
     name: infra-lakehouse
-  patches:
-    - target:
-        kind: HelmRelease
-        name: kube-prometheus-stack
-      patch: |
-        - op: add
-          path: /spec/valuesFrom/0
-          value:
-            kind: ConfigMap
-            name: prometheus-operator-values
-            valuesKey: values.yaml
