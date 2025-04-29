@@ -4,9 +4,6 @@ metadata:
   name: monitoring-app # Renamed
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: kube-prometheus-stack # Depends on HelmRelease
-      namespace: monitoring
   interval: 1m
   path: "./infrastructure/monitoring-app" # POINT TO A NEW PATH
   prune: true
