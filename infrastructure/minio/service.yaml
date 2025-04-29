@@ -13,6 +13,6 @@ spec:
     - name: console
       port: 9001
       targetPort: 9001
-      nodePort: 38763
+      nodePort: 30008
   selector:
     app: minio
