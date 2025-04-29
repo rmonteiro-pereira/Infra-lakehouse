@@ -5,6 +5,9 @@ metadata:
   name: monitoring
   namespace: flux-system
 spec:
+  dependsOn:             # <-- Add this
+    - name: kube-prometheus-stack
+      namespace: monitoring # 
   interval: 1m
   path: "./infrastructure/monitoring"
   prune: true
@@ -21,4 +24,4 @@ spec:
           value:
             kind: ConfigMap
             name: prometheus-operator-values
-            valuesKey: prometheus-values.yaml
+            valuesKey: values.yaml
