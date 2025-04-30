@@ -71,8 +71,8 @@ data:
           memory: "16Gi"
       terminationGracePeriodSeconds: 600
 
-    flower:
-      enabled: true
+    # flower:
+    #   enabled: true
 
 
    
