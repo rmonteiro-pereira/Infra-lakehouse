@@ -17,3 +17,5 @@ spec:
     - kind: ConfigMap
       name: airflow-values
       valuesKey: values.yaml
+  wait: true
+  timeout: 5m
