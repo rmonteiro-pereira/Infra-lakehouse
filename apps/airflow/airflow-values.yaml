@@ -9,37 +9,14 @@ metadata:
     app.kubernetes.io/managed-by: flux
 data:
   values.yaml: |
-    # =============== Core Airflow ===============
-    airflow:
-      image:
-        repository: apache/airflow
-        tag: 2.7.3  # Pinned to latest stable
-        pullPolicy: IfNotPresent
-        pullSecrets: []
-      
-      executor: CeleryExecutor
-      config:
-        # Security
-        AIRFLOW__CORE__FERNET_KEY: ${FERNET_KEY}
-        AIRFLOW__WEBSERVER__SECRET_KEY: ${WEBSERVER_SECRET}
-        AIRFLOW__API__AUTH_BACKEND: "airflow.api.auth.backend.basic_auth"
-        
-        # Performance
-        AIRFLOW__SCHEDULER__SCHEDULE_AFTER_TASK_EXECUTION: "False"
-        AIRFLOW__SCHEDULER__MIN_FILE_PROCESS_INTERVAL: 30
-        AIRFLOW__CORE__PARALLELISM: 32
-        AIRFLOW__CORE__DAG_CONCURRENCY: 16
+    executor: CeleryExecutor
+    fernetKey: "teste"
 
-        # Monitoring
-        AIRFLOW__METRICS__STATSD_ON: "True"
-        AIRFLOW__METRICS__STATSD_HOST: "kube-prometheus-stack-prometheus-statsd.monitoring.svc"
-        AIRFLOW__METRICS__STATSD_PORT: "9125"
-        AIRFLOW__METRICS__STATSD_PREFIX: "airflow"
-
-    # =============== PostgreSQL ===============
     postgresql:
       enabled: true
-      postgresqlUsername: airflow
+      auth:
+        username: airflow
+        password: "teste"
       postgresqlDatabase: airflow_prod
       persistence:
         enabled: true
@@ -53,16 +30,15 @@ data:
           cpu: "4"
           memory: "8Gi"
 
-    # =============== Redis (Celery Broker) ===============
     redis:
       enabled: true
-      architecture: "standalone"
       auth:
-        password: ${REDIS_PASSWORD}
+        password: "teste"
       master:
         persistence:
           enabled: true
           size: 50Gi
+          storageClass: "standard"
         resources:
           requests:
             cpu: "2"
@@ -71,7 +47,6 @@ data:
             cpu: "4"
             memory: "8Gi"
 
-    # =============== Webserver ===============
     webserver:
       replicas: 3
       resources:
@@ -93,7 +68,6 @@ data:
           - secretName: "airflow-tls"
             hosts: ["airflow.example.com"]
 
-    # =============== Scheduler ===============
     scheduler:
       replicas: 2
       resources:
@@ -107,7 +81,6 @@ data:
         initialDelaySeconds: 120
         periodSeconds: 30
 
-    # =============== Workers ===============
     workers:
       replicas: 4
       resources:
@@ -117,13 +90,8 @@ data:
         limits:
           cpu: "4"
           memory: "16Gi"
-      persistence:
-        enabled: true
-        size: 50Gi
-        storageClass: "standard"
       terminationGracePeriodSeconds: 600
 
-    # =============== Flower ===============
     flower:
       enabled: true
       replicas: 1
@@ -131,7 +99,6 @@ data:
         enabled: true
         hosts: ["flower.airflow.example.com"]
 
-    # =============== Monitoring ===============
     metrics:
       enabled: true
       serviceMonitor:
@@ -141,8 +108,6 @@ data:
         labels:
           release: "kube-prometheus-stack"
 
-    # =============== Logging ===============
-    logs:
-      persistence:
-        enabled: true
-        existingClaim: "airflow-logs-pvc"
+    logPersistence:
+      enabled: true
+      existingClaim: "airflow-logs-pvc"
