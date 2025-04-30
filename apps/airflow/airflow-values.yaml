@@ -23,8 +23,8 @@ data:
     # Database (PostgreSQL)
     postgresql:
       enabled: true
-    auth:
-      username: airflow
+      auth:
+        username: airflow
       postgresqlDatabase: airflow
       persistence:
         enabled: true
