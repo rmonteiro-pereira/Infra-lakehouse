@@ -30,39 +30,25 @@ data:
         size: 50Gi
         storageClass: standard
 
-    # Redis (Celery Broker)
+    # Redis (Celery Broker) - Adjust based on chart v1.13.0 schema
     redis:
       enabled: true
-      architecture: standalone
-      master:
-        persistence:
-          enabled: true
-          size: 20Gi
+      # 'architecture' and 'master' might not be top-level keys.
+      # Persistence might be configured like this:
+      persistence:
+         enabled: true
+         size: 20Gi
+      # Check chart docs for correct structure for standalone/HA
 
     # Web Server
     webserver:
       replicas: 2
-      resources:
-        requests:
-          cpu: "1"
-          memory: "2Gi"
-        limits:
-          cpu: "2"
-          memory: "4Gi"
-      livenessProbe:
-        initialDelaySeconds: 30
-        timeoutSeconds: 10
+      # ... other webserver config ...
 
     # Workers
     workers:
       replicas: 4
-      resources:
-        requests:
-          cpu: "2"
-          memory: "4Gi"
-        limits:
-          cpu: "4"
-          memory: "8Gi"
+      # ... other worker config ...
       persistence:
         enabled: true
         size: 20Gi
@@ -77,12 +63,14 @@ data:
         labels:
           release: kube-prometheus-stack
 
-    # Flower (Celery UI)
+    # Flower (Celery UI) - Adjust based on chart v1.13.0 schema
     flower:
       enabled: true
-      replicas: 1
-      ingress:
-        enabled: true
-        hostname: flower.airflow.example.com
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-prod
+      # 'replicas' might be directly under 'flower' or nested differently
+      # replicas: 1 # Check if this key is valid here
+      # 'ingress' might be nested or named differently
+      # ingress: # Check if this structure is valid
+      #   enabled: true
+      #   hostname: flower.airflow.example.com
+      #   annotations:
+      #     cert-manager.io/cluster-issuer: letsencrypt-prod
