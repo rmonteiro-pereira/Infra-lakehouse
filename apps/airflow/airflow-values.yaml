@@ -63,17 +63,17 @@ data:
           cpu: "1"
           memory: "2Gi"
       terminationGracePeriodSeconds: 600
+    createUserJob:
+      useHelmHooks: false
+      applyCustomEnv: false
+    migrateDatabaseJob:
+      useHelmHooks: false
+      applyCustomEnv: false
 
-createUserJob:
-  useHelmHooks: false
-  applyCustomEnv: false
-migrateDatabaseJob:
-  useHelmHooks: false
-  applyCustomEnv: false
-scheduler:
-  waitForMigrations:
-    enabled: true
-    migrationWaitTimeout: 300  # seconds
+    scheduler:
+      waitForMigrations:
+        enabled: true
+        migrationWaitTimeout: 300  # seconds
 
 
 
