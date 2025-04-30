@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: airflow
-      version: "1.13.0" # Use the desired version
+      version: "1.16.0" # Use the desired version
       sourceRef:
         kind: HelmRepository
         name: apache-airflow
