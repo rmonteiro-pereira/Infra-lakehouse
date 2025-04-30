@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 5m
-  path: "../infrastructure/helm-releases"  # Points to central HelmReleases
+  path: "./apps/airflow"  # Points to central HelmReleases
   prune: true
   sourceRef:
     kind: GitRepository

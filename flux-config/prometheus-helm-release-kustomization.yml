@@ -1,12 +1,14 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: monitoring-app # Renamed
+  name: helmreleases
   namespace: flux-system
 spec:
-  interval: 1m
-  path: "./apps/monitoring/monitoring-app"# POINT TO A NEW PATH
+  interval: 5m
+  path: "./apps/monitoring/prometheus/helm-release" 
   prune: true
   sourceRef:
     kind: GitRepository
     name: infra-lakehouse
+  wait: true
+  timeout: 5m
