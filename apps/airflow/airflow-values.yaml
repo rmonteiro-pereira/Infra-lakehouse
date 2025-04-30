@@ -17,10 +17,14 @@ data:
       auth:
         username: airflow
         password: "teste"
-      postgresqlDatabase: airflow_prod
+
+
+    redis:
+      enabled: true
+      password: "teste"  
       persistence:
         enabled: true
-        size: 100Gi
+        size: 50Gi
         storageClass: "standard"
       resources:
         requests:
@@ -29,23 +33,6 @@ data:
         limits:
           cpu: "4"
           memory: "8Gi"
-
-    redis:
-      enabled: true
-      auth:
-        password: "teste"
-      master:
-        persistence:
-          enabled: true
-          size: 50Gi
-          storageClass: "standard"
-        resources:
-          requests:
-            cpu: "2"
-            memory: "4Gi"
-          limits:
-            cpu: "4"
-            memory: "8Gi"
 
     webserver:
       replicas: 3
@@ -59,14 +46,6 @@ data:
       livenessProbe:
         initialDelaySeconds: 60
         periodSeconds: 30
-      ingress:
-        enabled: true
-        className: "nginx"
-        hosts:
-          - "airflow.example.com"
-        tls:
-          - secretName: "airflow-tls"
-            hosts: ["airflow.example.com"]
 
     scheduler:
       replicas: 2
@@ -95,19 +74,8 @@ data:
     flower:
       enabled: true
       replicas: 1
-      ingress:
-        enabled: true
-        hosts: ["flower.airflow.example.com"]
 
-    metrics:
-      enabled: true
-      serviceMonitor:
-        enabled: true
-        namespace: "monitoring"
-        interval: "30s"
-        labels:
-          release: "kube-prometheus-stack"
 
-    logPersistence:
-      enabled: true
-      existingClaim: "airflow-logs-pvc"
+   
+
+  
