@@ -14,14 +14,9 @@ data:
 
     postgresql:
       enabled: true
-      auth:
-        username: airflow
-        password: "teste"
-
 
     redis:
       enabled: true
-      password: "teste"  
       persistence:
         enabled: true
         size: 10Gi
