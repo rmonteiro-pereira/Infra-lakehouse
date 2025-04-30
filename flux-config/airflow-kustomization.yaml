@@ -11,7 +11,4 @@ spec:
     kind: GitRepository
     name: infra-lakehouse
   targetNamespace: airflow
-  patches:
-    - target:
-        kind: HelmRelease
-        name: airflow
+
