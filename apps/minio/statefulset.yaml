@@ -1,4 +1,4 @@
-# infrastructure/minio/statefulset.yaml
+
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:

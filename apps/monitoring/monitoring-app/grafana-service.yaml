@@ -1,4 +1,4 @@
-# filepath: e:\Projetos\Portifolio\Infra-lakehouse\infrastructure\monitoring-app\grafana-service.yaml
+
 apiVersion: v1
 kind: Service
 metadata:

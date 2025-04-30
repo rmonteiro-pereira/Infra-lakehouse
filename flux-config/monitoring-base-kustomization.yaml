@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m # Can be longer than app
-  path: "./infrastructure/monitoring" # Same path
+  path: "./apps/monitoring" # Same path
   prune: true
   sourceRef:
     kind: GitRepository

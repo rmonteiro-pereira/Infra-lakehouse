@@ -1,13 +1,14 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: airflow
+  name: namespaces-setup
   namespace: flux-system
 spec:
   interval: 5m
-  path: ./apps/airflow
-  prune: true
+  path: ./infrastructure/namespaces
+  prune: false
   sourceRef:
     kind: GitRepository
     name: infra-lakehouse
-  targetNamespace: airflow
+  wait: true
+  timeout: 5m
