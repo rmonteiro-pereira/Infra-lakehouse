@@ -11,8 +11,7 @@ data:
   values.yaml: |
     executor: CeleryExecutor
 
-    postgresql:
-      enabled: true
+
 
     redis:
       enabled: true
@@ -65,6 +64,8 @@ data:
           memory: "2Gi"
       terminationGracePeriodSeconds: 600
       
+migrateDatabaseJob:
+  enabled: true
 scheduler:
   waitForMigrations:
     enabled: true
