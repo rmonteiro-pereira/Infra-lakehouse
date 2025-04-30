@@ -1,32 +1,88 @@
-# infrastructure/airflow/values.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: airflow-values
   namespace: airflow
+  labels:
+    app.kubernetes.io/managed-by: flux
 data:
   values.yaml: |
-    executor: CeleryExecutor
-    redis:
-      enabled: true
+    # Core Configuration
+    airflow:
+      image:
+        repository: apache/airflow
+        tag: 2.6.3
+        pullPolicy: IfNotPresent
+      
+      executor: CeleryExecutor
+      config:
+        AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "False"
+        AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+        AIRFLOW__CORE__FERNET_KEY: ${FERNET_KEY}  # Will be replaced by secret
+
+    # Database (PostgreSQL)
     postgresql:
       enabled: true
-      persistence:
-        size: 50Gi
-    workers:
-      replicas: 4
+      postgresqlUsername: airflow
+      postgresqlDatabase: airflow
       persistence:
         enabled: true
-        size: 20Gi
+        size: 50Gi
+        storageClass: standard
+
+    # Redis (Celery Broker)
+    redis:
+      enabled: true
+      architecture: standalone
+      master:
+        persistence:
+          enabled: true
+          size: 20Gi
+
+    # Web Server
     webserver:
       replicas: 2
       resources:
         requests:
-          cpu: 1
-          memory: 2Gi
-    flower:
-      enabled: true
+          cpu: "1"
+          memory: "2Gi"
+        limits:
+          cpu: "2"
+          memory: "4Gi"
+      livenessProbe:
+        initialDelaySeconds: 30
+        timeoutSeconds: 10
+
+    # Workers
+    workers:
+      replicas: 4
+      resources:
+        requests:
+          cpu: "2"
+          memory: "4Gi"
+        limits:
+          cpu: "4"
+          memory: "8Gi"
+      persistence:
+        enabled: true
+        size: 20Gi
+
+    # Monitoring
     metrics:
       enabled: true
       serviceMonitor:
         enabled: true
+        namespace: monitoring
+        interval: 30s
+        labels:
+          release: kube-prometheus-stack
+
+    # Flower (Celery UI)
+    flower:
+      enabled: true
+      replicas: 1
+      ingress:
+        enabled: true
+        hostname: flower.airflow.example.com
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-prod
