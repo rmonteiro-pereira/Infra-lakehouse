@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 5m
-  path: ./infrastructure/helmreleases
+  path: "./infrastructure/helmreleases"
   prune: false
   sourceRef:
     kind: GitRepository
