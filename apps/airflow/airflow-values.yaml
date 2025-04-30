@@ -64,6 +64,11 @@ data:
           cpu: "1"
           memory: "2Gi"
       terminationGracePeriodSeconds: 600
+      
+scheduler:
+  waitForMigrations:
+    enabled: true
+    migrationWaitTimeout: 300  # seconds
 
 
 
