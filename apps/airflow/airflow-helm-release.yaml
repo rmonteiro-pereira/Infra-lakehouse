@@ -13,6 +13,10 @@ spec:
         kind: HelmRepository
         name: apache-airflow
         namespace: flux-system
+  install:
+    timeout: 15m0s   # <-- extend install timeout (default is 5m0s)
+  upgrade:
+    timeout: 15m0s   # <-- extend upgrade timeout
   valuesFrom:
     - kind: ConfigMap
       name: airflow-values
