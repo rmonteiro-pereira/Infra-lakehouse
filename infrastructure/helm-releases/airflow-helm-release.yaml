@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: airflow
+  namespace: airflow
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: airflow
+      version: "1.13.0" # Use the desired version
+      sourceRef:
+        kind: HelmRepository
+        name: apache-airflow
+        namespace: flux-system
+  valuesFrom:
+    - kind: ConfigMap
+      name: airflow-values
+      valuesKey: values.yaml
