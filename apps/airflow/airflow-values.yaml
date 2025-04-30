@@ -10,7 +10,6 @@ metadata:
 data:
   values.yaml: |
     executor: CeleryExecutor
-    fernetKey: "teste"
 
     postgresql:
       enabled: true
@@ -66,8 +65,6 @@ data:
           memory: "2Gi"
       terminationGracePeriodSeconds: 600
 
-    # flower:
-    #   enabled: true
 
 
    
