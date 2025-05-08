@@ -1,12 +1,12 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
-  name: infra-lakehouse
+  name: flux-system
   namespace: flux-system
 spec:
-  interval: 1m  # Sincroniza a cada 1 minuto
-  url: https://github.com/rmonteiro-pereira/Infra-lakehouse.git
+  interval: 1m0s
   ref:
-    branch: main  # Branch do repositório
-  # secretRef:  # (Opcional) Se o repositório for privado
-  #   name: git-credentials
+    branch: main
+  secretRef:
+    name: flux-system
+  url: https://github.com/rmonteiro-pereira/Infra-lakehouse.git
