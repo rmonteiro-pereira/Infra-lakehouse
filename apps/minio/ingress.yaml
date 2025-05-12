@@ -6,7 +6,7 @@ metadata:
   namespace: minio
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod  # Requires cert-manager
-    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
 spec:
   tls:
   - hosts:
