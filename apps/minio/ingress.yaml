@@ -10,10 +10,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - minio.your-domain.com
+    - minio.vanir-proxmox.duckdns.org
     secretName: minio-tls
   rules:
-  - host: minio.your-domain.com
+  - host: minio.vanir-proxmox.duckdns.org
     http:
       paths:
       - path: /
