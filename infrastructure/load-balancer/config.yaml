@@ -5,7 +5,7 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-    - 192.168.32.30-192.168.32.90  # <-- Use a range of free IPs in your LAN
+    - 192.168.32.70-192.168.32.90  # <-- Use a range of free IPs in your LAN
 
 ---
 apiVersion: metallb.io/v1beta1
