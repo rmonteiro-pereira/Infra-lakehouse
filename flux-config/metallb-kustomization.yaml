@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: "./infrastructure/load-balancer/metallb"
+  path: "./infrastructure/load-balancer/"
   prune: true
   sourceRef:
     kind: GitRepository
