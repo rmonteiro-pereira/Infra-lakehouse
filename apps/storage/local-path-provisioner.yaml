@@ -61,18 +61,7 @@ kind: ServiceAccount
 metadata:
   name: local-path-provisioner-service-account
   namespace: local-path-storage
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: local-path-provisioner-role
-rules:
-  - apiGroups: [""]
-    resources: ["nodes", "persistentvolumes", "persistentvolumeclaims", "events"]
-    verbs: ["get", "list", "watch", "create", "delete", "patch", "update"]
-  - apiGroups: ["storage.k8s.io"]
-    resources: ["storageclasses"]
-    verbs: ["get", "list", "watch"]
+
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
