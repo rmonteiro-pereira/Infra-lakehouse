@@ -31,3 +31,17 @@ spec:
             name: minio
             port:
               number: 9001
+      - path: /console/
+        pathType: Prefix
+        backend:
+          service:
+            name: minio
+            port:
+              number: 9001
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: minio
+            port:
+              number: 9001
