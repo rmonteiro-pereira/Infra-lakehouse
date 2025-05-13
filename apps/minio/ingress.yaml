@@ -11,10 +11,10 @@ metadata:
       more_set_headers "Access-Control-Allow-Origin: *";
 spec:
   ingressClassName: nginx
-  tls:
-  - hosts:
-    - minio.vanir-proxmox.duckdns.org
-    secretName: minio-tls
+  # tls:
+  # - hosts:
+  #   - minio.vanir-proxmox.duckdns.org
+  #   secretName: minio-tls
   rules:
   - host: minio.vanir-proxmox.duckdns.org
     http:
