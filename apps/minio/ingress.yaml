@@ -12,14 +12,14 @@ spec:
   - host: minio.vanir-proxmox.duckdns.org
     http:
       paths:
-      - path: /console(/|$)(.*)
+      - path: /console
         pathType: Prefix
         backend:
           service:
             name: minio
             port:
               number: 9001
-      - path: /(.*)
+      - path: /
         pathType: Prefix
         backend:
           service:
