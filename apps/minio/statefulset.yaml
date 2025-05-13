@@ -1,3 +1,4 @@
+# clusters/my-cluster/infrastructure/minio/minio-statefulset.yaml
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -24,9 +25,15 @@ spec:
         - :9001
         env:
         - name: MINIO_ROOT_USER
-          value: "admin"
+          valueFrom:
+            secretKeyRef:
+              name: minio-secrets
+              key: rootUser
         - name: MINIO_ROOT_PASSWORD
-          value: "password" # Change this to a secure password
+          valueFrom:
+            secretKeyRef:
+              name: minio-secrets
+              key: rootPassword
         ports:
         - containerPort: 9000
           name: minio
