@@ -21,7 +21,7 @@ spec:
         image: quay.io/minio/minio:latest
         args:
         - server
-        - http://minio-{0...3}.minio.minio.svc.cluster.local/data  # Distributed mode DNS
+        - http://minio-{0...3}.minio.minio.svc.cluster.local/var/mnt/local-path-provisioner/minio/data  # Distributed mode DNS
         - --console-address
         - ":9001"
         env:
@@ -39,7 +39,7 @@ spec:
               key: root-password
         volumeMounts:
         - name: storage
-          mountPath: /data
+          mountPath: /var/mnt/local-path-provisioner/minio/data
   volumeClaimTemplates:  # Critical: Auto-creates PVCs per pod
   - metadata:
       name: storage
@@ -48,4 +48,4 @@ spec:
       accessModes: [ReadWriteOnce]  # Minikube only supports RWO
       resources:
         requests:
-          storage: 1Gi  # Size per pod
+          storage: 153Gi  # Size per pod
