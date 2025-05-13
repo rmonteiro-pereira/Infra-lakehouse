@@ -1,16 +1,19 @@
+# filepath: e:\Projetos\Portifolio\Infra-lakehouse\apps\minio\minio-external-svc.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: minio
+  name: minio-external # Or choose a new name to avoid conflict
   namespace: minio
 spec:
-  type: ClusterIP  # Regular ClusterIP service
-  ports:
-    - name: api
-      port: 9000
-      targetPort: 9000
-    - name: console
-      port: 9001
-      targetPort: 9001
+  type: LoadBalancer
   selector:
-    app: minio
+    app: minio # Make sure this selector matches your MinIO pod labels
+  ports:
+    - name: console-external
+      protocol: TCP
+      port: 9001 # External port the LoadBalancer will listen on
+      targetPort: 9001 # Target port on your MinIO pods for the console
+    - name: api-external
+      protocol: TCP
+      port: 9000 # External port for the API
+      targetPort: 9000 # Target port on your MinIO pods for the API
