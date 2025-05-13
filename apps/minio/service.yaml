@@ -4,7 +4,7 @@ metadata:
   name: minio
   namespace: minio
 spec:
-  clusterIP: None 
+  type: ClusterIP  # Regular ClusterIP service
   ports:
     - name: api
       port: 9000
