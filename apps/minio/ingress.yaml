@@ -8,6 +8,7 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-prod  # Requires cert-manager
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
 spec:
+  ingressClassName: nginx
   tls:
   - hosts:
     - minio.vanir-proxmox.duckdns.org
