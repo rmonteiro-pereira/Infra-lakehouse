@@ -41,6 +41,7 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx
   rules:
     - host: hello.vanir-proxmox.duckdns.org
       http:
@@ -52,5 +53,4 @@ spec:
                 name: hello-world
                 port:
                   number: 80
-
 
