@@ -4,15 +4,13 @@ metadata:
   name: minio
   namespace: minio
 spec:
-  type: NodePort  # Or LoadBalancer for cloud
+  clusterIP: None 
   ports:
     - name: api
       port: 9000
       targetPort: 9000
-      nodePort: 30007  # Optional (for NodePort)
     - name: console
       port: 9001
       targetPort: 9001
-      nodePort: 30008
   selector:
     app: minio
