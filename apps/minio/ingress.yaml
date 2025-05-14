@@ -1,22 +1,22 @@
-# minio-ingress.yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: testing-ns-ingress-service
-  namespace: testing
+  name: minio-ingress
+  namespace: minio
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$1  # Strip "/minio" prefix
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: 8m
 spec:
-  ingressClassName: nginx-testing-ns
+  ingressClassName: nginx
   rules:
+  - host: minio.teste.local
   - http:
       paths:
       - path: /console/?(.*)  # Capture paths after "/minio/"
         pathType: ImplementationSpecific
         backend:
           service:
-            name: minio-svc  # Matches the Service name
+            name: minio-ingress  # Matches the Service name
             port:
               number: 9001   # Console port
