@@ -15,8 +15,11 @@ spec:
     http:
       paths:
       # - path: /console/?(.*)  # Capture paths after /console/
-      - path: /  # Capture paths after /console/
-        pathType: ImplementationSpecific # Often needed for regex paths
+      - path: /
+        pathType: Prefix
+        annotations:
+          nginx.ingress.kubernetes.io/rewrite-target: http://minio.ui.vanir-proxmox.duckdns.org/console/ # Or just /console/ if base is same
+          nginx.ingress.kubernetes.io/permanent-redirect-code: "301" # Or 302
         backend:
           service:
             name: minio-ingress # Your MinIO service name
