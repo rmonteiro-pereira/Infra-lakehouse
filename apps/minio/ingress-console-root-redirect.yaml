@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minio-console-root-redirect-ingress
+  namespace: minio
+  annotations:
+    # Redirects all paths defined in this Ingress to the specified URL
+    nginx.ingress.kubernetes.io/permanent-redirect: "http://minio.ui.vanir-proxmox.duckdns.org/console/"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP" # Good practice, though backend is dummy
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: minio.ui.vanir-proxmox.duckdns.org
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          # A backend is required by the Ingress spec, even if a redirect happens first.
+          # Point it to a valid service in the namespace.
+          service:
+            name: minio # Your MinIO Kubernetes Service name
+            port:
+              number: 9001 # Any valid port of the service
