@@ -4,24 +4,48 @@ metadata:
   name: minio-console-ingress
   namespace: minio
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$1 # Rewrite for console paths
-    nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/proxy-body-size: "8m" # Your existing setting
+    # This rewrite-target is for the /console(/|$)(.*) path.
+    # The regex in that path definition will capture the part after /console/.
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/use-regex: "true" # Enables regex for path matching
+    nginx.ingress.kubernetes.io/proxy-body-size: "8m"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    # This snippet handles the redirect from / to /console/
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      if ($request_uri = "/") {
+        return 301 /console$is_args$args;
+      }
 spec:
   ingressClassName: nginx
   rules:
   - host: minio.ui.vanir-proxmox.duckdns.org
     http:
       paths:
-      # - path: /console/?(.*)  # Capture paths after /console/
-      - path: /
-        pathType: Prefix
-        annotations:
-          nginx.ingress.kubernetes.io/rewrite-target: http://minio.ui.vanir-proxmox.duckdns.org/console/ # Or just /console/ if base is same
-          nginx.ingress.kubernetes.io/permanent-redirect-code: "301" # Or 302
+      # Path for serving the actual MinIO console
+      # The regex /console(/|$)(.*) matches:
+      #   /console  (e.g. http://.../console)
+      #   /console/ (e.g. http://.../console/)
+      #   /console/some/path (e.g. http://.../console/static/main.js)
+      # $1 captures the first group: (/|$)
+      # $2 captures the second group: (.*) which is what we want to send to the backend
+      - path: /console(/|$)(.*) # UNCOMMENTED AND CORRECTED REGEX
+        pathType: ImplementationSpecific # Necessary for regex paths
         backend:
           service:
-            name: minio-ingress # Your MinIO service name
+            # IMPORTANT: Verify this is the name of your Kubernetes Service
+            # that exposes MinIO (e.g., 'minio', not 'minio-ingress')
+            name: minio
             port:
               number: 9001   # MinIO Console port
+
+      # Path for the root. Requests to / will be caught by the configuration-snippet.
+      # A backend is still required by the Ingress spec for this path definition.
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            # This backend is a placeholder as the redirect happens first.
+            # It should point to a valid service in the namespace.
+            name: minio # Or your actual MinIO service name
+            port:
+              number: 9001 # Or any valid port of that service
