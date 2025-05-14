@@ -4,32 +4,31 @@ metadata:
   name: minio-ingress
   namespace: minio
   annotations:
-    nginx.ingress.kubernetes.io/proxy-body-size: "0" # Allows large file uploads
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTP" # NGINX talks to MinIO pods over HTTP
-    # If you use /console path for UI and / for API, you might need rewrite rules
-    # for the API if MinIO expects API calls at the root of MINIO_SERVER_URL.
-    # However, with MINIO_SERVER_URL set to the root and MINIO_BROWSER_REDIRECT_URL to /console,
-    # this setup should work for many cases.
-    # If API calls from console (e.g. to /api) are not working, you might need:
-    # nginx.ingress.kubernetes.io/rewrite-target: /$2 # If path is /(api|minio/anything)(.*)
-    # For now, let's keep it simple.
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    # CRITICAL: Ensure there is NO rewrite-target annotation here that
+    # would strip the /console prefix for the /console path rule below.
+    # If you have something like:
+    # nginx.ingress.kubernetes.io/rewrite-target: /$2
+    # or any other rewrite rule that affects the /console path by stripping
+    # its prefix, REMOVE IT or COMMENT IT OUT for this Ingress resource.
 spec:
-  ingressClassName: nginx # Or your specific Ingress controller class
+  ingressClassName: nginx
   rules:
   - host: minio.teste.local
     http:
       paths:
-      - path: /console # Path for MinIO Console
+      - path: /console # For MinIO Console
+        pathType: Prefix # With no rewrite, this should pass /console/... as is
+        backend:
+          service:
+            name: minio-ingress # Or 'minio', matching your service name
+            port:
+              number: 9001
+      - path: / # For MinIO API
         pathType: Prefix
         backend:
           service:
             name: minio-ingress # Or 'minio', matching your service name
             port:
-              number: 9001 # Port for MinIO console
-      - path: / # Path for MinIO API (S3 endpoint)
-        pathType: Prefix
-        backend:
-          service:
-            name: minio-ingress # Or 'minio', matching your service name
-            port:
-              number: 9000 # Port for MinIO API
+              number: 9000
