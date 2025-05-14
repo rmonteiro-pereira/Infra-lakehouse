@@ -10,7 +10,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: minio.ui.vanir-proxmox.duckdns.org
+  - host: minio.ui.teste.local
     http:
       paths:
       - path: /
