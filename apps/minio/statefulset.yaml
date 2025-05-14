@@ -34,8 +34,8 @@ spec:
             secretKeyRef:
               name: minio-secrets
               key: root-password
-        # - name: MINIO_BROWSER_REDIRECT_URL
-        #   value: "http://minio.teste.local/console/"
+        - name: MINIO_BROWSER_REDIRECT_URL
+          value: "http://minio.ui.teste.local/console/"
         # - name: MINIO_SERVER_URL
         #   value: "http://minio.teste.local/"
         ports:
