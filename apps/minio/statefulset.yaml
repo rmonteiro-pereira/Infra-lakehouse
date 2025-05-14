@@ -46,6 +46,14 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /data
+        readinessProbe:
+          httpGet:
+            path: /console/health/ready  # Subpath-aware health check
+            port: 9001
+        livenessProbe:
+          httpGet:
+            path: /console/health/live
+            port: 9001
   volumeClaimTemplates:
   - metadata:
       name: data

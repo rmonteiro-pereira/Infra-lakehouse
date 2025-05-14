@@ -1,34 +1,22 @@
+# minio-ingress.yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: minio-ingress
-  namespace: minio
+  name: testing-ns-ingress-service
+  namespace: testing
   annotations:
-    nginx.ingress.kubernetes.io/proxy-body-size: "0"
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-    # CRITICAL: Ensure there is NO rewrite-target annotation here that
-    # would strip the /console prefix for the /console path rule below.
-    # If you have something like:
-    # nginx.ingress.kubernetes.io/rewrite-target: /$2
-    # or any other rewrite rule that affects the /console path by stripping
-    # its prefix, REMOVE IT or COMMENT IT OUT for this Ingress resource.
+    nginx.ingress.kubernetes.io/rewrite-target: /$1  # Strip "/minio" prefix
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 8m
 spec:
-  ingressClassName: nginx
+  ingressClassName: nginx-testing-ns
   rules:
-  - host: minio.teste.local
-    http:
+  - http:
       paths:
-      - path: /console/ # For MinIO Console
-        pathType: Prefix # With no rewrite, this should pass /console/... as is
+      - path: /console/?(.*)  # Capture paths after "/minio/"
+        pathType: ImplementationSpecific
         backend:
           service:
-            name: minio-ingress # Or 'minio', matching your service name
+            name: minio-svc  # Matches the Service name
             port:
-              number: 9001
-      - path: / # For MinIO API
-        pathType: Prefix
-        backend:
-          service:
-            name: minio-ingress # Or 'minio', matching your service name
-            port:
-              number: 9000
+              number: 9001   # Console port

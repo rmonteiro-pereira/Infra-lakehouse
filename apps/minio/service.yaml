@@ -9,11 +9,11 @@ spec:
   selector:
     app: minio # Make sure this selector matches your MinIO pod labels
   ports:
-    - name: console-external
+    - name: console
       protocol: TCP
       port: 9001 # External port the LoadBalancer will listen on
       targetPort: 9001 # Target port on your MinIO pods for the console
-    - name: api-external
+    - name: api
       protocol: TCP
       port: 9000 # External port for the API
       targetPort: 9000 # Target port on your MinIO pods for the API
