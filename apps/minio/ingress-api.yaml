@@ -10,7 +10,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: minio.api.teste.local
+  - host: minio.api.vanir-proxmox.duckdns.org
     http:
       paths:
       - path: / # Path for MinIO S3 API

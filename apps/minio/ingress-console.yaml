@@ -13,7 +13,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: minio.ui.teste.local
+  - host: minio.ui.vanir-proxmox.duckdns.org
     http:
       paths:
       - path: /console(/|$)(.*) # Matches /console, /console/, /console/path
