@@ -16,7 +16,7 @@ metadata:
 spec:
   ingressClassName: nginx # Or your specific Ingress controller class
   rules:
-  - host: minio.vanir-proxmox.duckdns.org
+  - host: minio.teste.local
     http:
       paths:
       - path: /console # Path for MinIO Console
