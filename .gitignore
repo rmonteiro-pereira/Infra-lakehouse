@@ -1,2 +1,5 @@
 kubeconfig
 talosconfig
+*.txt
+*.log
+*.ps1
