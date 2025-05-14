@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minio-console-ingress
+  namespace: minio
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1 # Rewrite for console paths
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "8m" # Your existing setting
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: minio.teste.local
+    http:
+      paths:
+      - path: /console/?(.*)  # Capture paths after /console/
+        pathType: ImplementationSpecific # Often needed for regex paths
+        backend:
+          service:
+            name: minio-ingress # Your MinIO service name
+            port:
+              number: 9001   # MinIO Console port
