@@ -11,7 +11,7 @@ spec:
   ingressClassName: nginx
   rules:
   - host: minio.teste.local
-  - http:
+    http:
       paths:
       - path: /console/?(.*)  # Capture paths after "/minio/"
         pathType: ImplementationSpecific
