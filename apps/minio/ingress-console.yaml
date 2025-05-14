@@ -11,7 +11,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: minio.teste.local
+  - host: minio.ui.teste.local
     http:
       paths:
       - path: /console/?(.*)  # Capture paths after /console/
