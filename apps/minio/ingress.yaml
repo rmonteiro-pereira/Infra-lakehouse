@@ -1,30 +1,35 @@
-# # filepath: e:\Projetos\Portifolio\Infra-lakehouse\apps\minio\ingress.yaml
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: minio-ingress
-#   namespace: minio
-#   annotations:
-#     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-#     nginx.ingress.kubernetes.io/proxy-body-size: "0"
-#     # Ensure no rewrite-target annotation is present that might interfere
-# spec:
-#   ingressClassName: nginx
-#   rules:
-#   - host: minio.vanir-proxmox.duckdns.org
-#     http:
-#       paths:
-#       - path: /console
-#         pathType: Prefix
-#         backend:
-#           service:
-#             name: minio
-#             port:
-#               number: 9001
-#       - path: /
-#         pathType: Prefix
-#         backend:
-#           service:
-#             name: minio
-#             port:
-#               number: 9000
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minio-ingress
+  namespace: minio
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "0" # Allows large file uploads
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP" # NGINX talks to MinIO pods over HTTP
+    # If you use /console path for UI and / for API, you might need rewrite rules
+    # for the API if MinIO expects API calls at the root of MINIO_SERVER_URL.
+    # However, with MINIO_SERVER_URL set to the root and MINIO_BROWSER_REDIRECT_URL to /console,
+    # this setup should work for many cases.
+    # If API calls from console (e.g. to /api) are not working, you might need:
+    # nginx.ingress.kubernetes.io/rewrite-target: /$2 # If path is /(api|minio/anything)(.*)
+    # For now, let's keep it simple.
+spec:
+  ingressClassName: nginx # Or your specific Ingress controller class
+  rules:
+  - host: minio.vanir-proxmox.duckdns.org
+    http:
+      paths:
+      - path: /console # Path for MinIO Console
+        pathType: Prefix
+        backend:
+          service:
+            name: minio-ingress # Or 'minio', matching your service name
+            port:
+              number: 9001 # Port for MinIO console
+      - path: / # Path for MinIO API (S3 endpoint)
+        pathType: Prefix
+        backend:
+          service:
+            name: minio-ingress # Or 'minio', matching your service name
+            port:
+              number: 9000 # Port for MinIO API

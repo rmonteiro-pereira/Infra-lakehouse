@@ -1,11 +1,11 @@
-# filepath: e:\Projetos\Portifolio\Infra-lakehouse\apps\minio\minio-external-svc.yaml
+# filepath: e:\Projetos\Portifolio\Infra-lakehouse\apps\minio\minio-ingress-svc.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: minio-external # Or choose a new name to avoid conflict
+  name: minio-ingress # Or choose a new name to avoid conflict
   namespace: minio
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: minio # Make sure this selector matches your MinIO pod labels
   ports:
