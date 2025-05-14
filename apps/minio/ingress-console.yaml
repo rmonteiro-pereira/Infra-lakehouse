@@ -4,7 +4,7 @@ metadata:
   name: minio-console-ingress
   namespace: minio
   annotations:
-    # nginx.ingress.kubernetes.io/rewrite-target: /$1 # Rewrite for console paths
+    nginx.ingress.kubernetes.io/rewrite-target: /$1 # Rewrite for console paths
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: "8m" # Your existing setting
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
