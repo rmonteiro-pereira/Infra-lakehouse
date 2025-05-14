@@ -1,0 +1,8 @@
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-path-provisioner
+provisioning:
+  diskSelector:
+    match: disk.transport == 'sda'
+  minSize: 50GB
+  maxSize: 50GB
