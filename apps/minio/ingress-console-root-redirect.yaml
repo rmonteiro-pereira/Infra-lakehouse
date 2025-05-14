@@ -6,7 +6,7 @@ metadata:
   annotations:
     # Redirects all paths defined in this Ingress to the specified URL
     nginx.ingress.kubernetes.io/permanent-redirect: "https://minio.ui.vanir-proxmox.duckdns.org/console/"
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS" # Good practice, though backend is dummy
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS" 
 spec:
   ingressClassName: nginx
   rules:
