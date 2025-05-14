@@ -20,7 +20,7 @@ spec:
             name: minio-ingress  # Matches the Service name
             port:
               number: 9001   # Console port
-      - path: / # Route the root path (and everything under it not matched by /console)
+      - path: /api # Route the root path (and everything under it not matched by /console)
         pathType: Prefix # Use Prefix for standard API access
         # NO rewrite-target should be needed here for the API
         # unless your MinIO API is served from a subpath internally, which is not standard.
