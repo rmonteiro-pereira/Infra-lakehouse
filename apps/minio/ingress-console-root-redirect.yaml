@@ -19,6 +19,6 @@ spec:
           # A backend is required by the Ingress spec, even if a redirect happens first.
           # Point it to a valid service in the namespace.
           service:
-            name: minio # Your MinIO Kubernetes Service name
+            name: minio-ingress # Your MinIO Kubernetes Service name
             port:
               number: 9001 # Any valid port of the service

@@ -20,6 +20,6 @@ spec:
         pathType: ImplementationSpecific # Required for regex in path
         backend:
           service:
-            name: minio # Your MinIO Kubernetes Service name
+            name: minio-ingress # Your MinIO Kubernetes Service name
             port:
               number: 9001 # MinIO Console port
