@@ -18,6 +18,6 @@ spec:
         pathType: Prefix # Standard API access at the root
         backend:
           service:
-            name: minio-ingress # Your MinIO service name
+            name: minio # Your MinIO service name
             port:
               number: 9000   # MinIO API port

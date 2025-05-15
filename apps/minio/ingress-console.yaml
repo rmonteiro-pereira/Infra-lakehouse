@@ -21,6 +21,6 @@ spec:
         pathType: ImplementationSpecific # Required for regex in path
         backend:
           service:
-            name: minio-ingress # Or your actual MinIO K8s Service name for the console
+            name: minio # Or your actual MinIO K8s Service name for the console
             port:
               number: 9001  

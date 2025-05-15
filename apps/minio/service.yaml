@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: minio-ingress # Or choose a new name to avoid conflict
+  name: minio # Or choose a new name to avoid conflict
   namespace: minio
 spec:
   type: ClusterIP

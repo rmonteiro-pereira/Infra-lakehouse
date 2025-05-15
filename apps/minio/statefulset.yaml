@@ -6,7 +6,7 @@ metadata:
   namespace: minio
 spec:
   serviceName: minio
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
       app: minio
@@ -20,7 +20,10 @@ spec:
         image: quay.io/minio/minio:latest
         args:
         - server
-        - /data
+        - http://minio-0.minio.minio.svc.cluster.local/data
+        - http://minio-1.minio.minio.svc.cluster.local/data
+        - http://minio-2.minio.minio.svc.cluster.local/data
+        - http://minio-3.minio.minio.svc.cluster.local/data
         - --console-address
         - :9001
         env:
@@ -60,4 +63,4 @@ spec:
       storageClassName: "local-path"
       resources:
         requests:
-          storage: 10Gi
+          storage: 200Gi
