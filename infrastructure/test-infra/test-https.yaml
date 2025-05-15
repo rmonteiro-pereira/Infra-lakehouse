@@ -1,0 +1,35 @@
+# filepath: e:\Projetos\Portifolio\Infra-lakehouse\apps\minio\httpbin-debug.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpbin-debug-svc
+  namespace: minio
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    app: httpbin-debug
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpbin-debug-deployment
+  namespace: minio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: httpbin-debug
+  template:
+    metadata:
+      labels:
+        app: httpbin-debug
+    spec:
+      containers:
+      - name: httpbin
+        image: kennethreitz/httpbin # A popular image for echoing HTTP requests
+        ports:
+        - containerPort: 80
