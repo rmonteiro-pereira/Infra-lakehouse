@@ -23,4 +23,4 @@ spec:
           service:
             name: httpbin-debug-svc # Your MinIO Kubernetes Service name
             port:
-              number: 9001 # MinIO Console port
+              number: 80 # MinIO Console port
