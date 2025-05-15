@@ -50,11 +50,11 @@ spec:
         readinessProbe:
           httpGet:
             path: /console/health/ready  # Subpath-aware health check
-            port: 9001
+            port: 9000
         livenessProbe:
           httpGet:
             path: /console/health/live
-            port: 9001
+            port: 9000
   volumeClaimTemplates:
   - metadata:
       name: data
