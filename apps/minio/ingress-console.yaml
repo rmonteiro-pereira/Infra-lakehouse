@@ -21,6 +21,6 @@ spec:
         pathType: ImplementationSpecific # Required for regex in path
         backend:
           service:
-            name: httpbin-debug-svc # Your MinIO Kubernetes Service name
+            name: minio-ingress # Or your actual MinIO K8s Service name for the console
             port:
-              number: 80 # MinIO Console port
+              number: 9001  
