@@ -1644,7 +1644,6 @@ spec:
         - --port=7472
         - --log-level=info
         - --tls-min-version=VersionTLS12
-        - --ignore-exclude-lb
         env:
         - name: METALLB_ML_SECRET_NAME
           value: memberlist
