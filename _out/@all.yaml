@@ -1,0 +1,44 @@
+machine:
+  network:
+    hostname: "talos-proxmox"  # <-- Moved inside `network`
+    interfaces:
+      - interface: eth0
+        dhcp: false
+        addresses:
+          - 192.168.32.24/23
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.32.1
+  certSANs:
+  - 127.0.0.1      # Required for localhost communication
+  - 192.168.32.24  # Control plane IP
+  - 192.168.32.36  # Additional node IP (if used)
+  - talos-proxmox
+  kubelet:
+    extraArgs:
+      node-labels: "kubernetes.io/hostname=talos-proxmox"
+      # rotate-server-certificates: true #erro kubelet server 
+  nodeLabels:
+    node.kubernetes.io/exclude-from-external-load-balancers: ""
+  nodeTaints: {}
+
+cluster:
+  controlPlane:
+    endpoint: https://192.168.32.24:6443
+  clusterName: "talos-proxmox-cluster"
+  apiServer:
+    certSANs:
+      - 127.0.0.1
+      - 192.168.32.24
+      - 192.168.32.36
+  allowSchedulingOnControlPlanes: true
+
+---
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-path-provisioner
+provisioning:
+    diskSelector:
+        match: true
+    minSize: 25GB
+    grow: true
