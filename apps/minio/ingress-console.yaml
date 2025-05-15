@@ -6,7 +6,7 @@ metadata:
   annotations:
     # This rewrite-target is for the /console(/|$)(.*) path.
     # $2 captures the part after /console/ (e.g., "static/main.js" or an empty string if just /console or /console/)
-    nginx.ingress.kubernetes.io/proxy-ssl-verify: "off"
+    # nginx.ingress.kubernetes.io/proxy-ssl-verify: "off"
     nginx.ingress.kubernetes.io/rewrite-target: /$2
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: "8m"
@@ -14,7 +14,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: minio.ui.vanir-proxmox.duckdns.org
+  - host: minio-ui.vanir-proxmox.duckdns.org
     http:
       paths:
       - path: /console(/|$)(.*) # Matches /console, /console/, /console/path

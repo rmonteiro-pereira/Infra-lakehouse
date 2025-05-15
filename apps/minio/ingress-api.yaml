@@ -5,13 +5,13 @@ metadata:
   namespace: minio
   annotations:
     # NO rewrite-target or use-regex annotations here
-    nginx.ingress.kubernetes.io/proxy-ssl-verify: "off"
+    # nginx.ingress.kubernetes.io/proxy-ssl-verify: "off"
     nginx.ingress.kubernetes.io/proxy-body-size: "8m" # If needed for API
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
 spec:
   ingressClassName: nginx
   rules:
-  - host: minio.api.vanir-proxmox.duckdns.org
+  - host: minio-api.vanir-proxmox.duckdns.org
     http:
       paths:
       - path: / # Path for MinIO S3 API
