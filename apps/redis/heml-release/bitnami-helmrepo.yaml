@@ -1,0 +1,13 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: bitnami-redis
+  namespace: flux-system # Sources are typically in flux-system
+spec:
+  interval: 1h # How often to check for new chart versions
+  url: oci://registry-1.docker.io/bitnamicharts/redis
+  ref:
+    # Specify a chart version tag. Find available tags on Artifact Hub or Bitnami's chart page.
+    # Example: use a specific version like '18.10.1'
+    tag: 21.1.3
+ # Replace with the desired chart version for Redis

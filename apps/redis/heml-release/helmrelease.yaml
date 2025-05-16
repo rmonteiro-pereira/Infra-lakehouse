@@ -1,0 +1,45 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: redis
+  namespace: redis # We'll deploy Redis into its own namespace
+spec:
+  interval: 5m
+  chartRef:
+    kind: OCIRepository
+    name: bitnami-redis # Must match the OCIRepository metadata.name
+    namespace: flux-system # Must match the OCIRepository metadata.namespace
+  # Chart version can also be specified here, overriding OCIRepository's ref if needed,
+  # but it's often cleaner to manage the version in the OCIRepository.
+  # chartVersion: "18.10.1"
+  releaseName: redis-master
+  targetNamespace: redis # Explicitly state the target namespace for resources
+  values:
+    # Common Bitnami Redis chart values.
+    # Refer to the chart's values.yaml for all available options.
+    # Example: Disable persistence for a simple cache (adjust as needed)
+    master:
+      persistence:
+        persistence:
+        enabled: true  # Set to true to enable persistence
+        storageClass: "local-path" # Optional: specify a StorageClass, e.g., "your-sc-name". If empty or omitted, uses default SC.
+        accessModes:
+          - ReadWriteOnce
+        size: 100Gi # Adjust the size here, e.g., "1Gi", "10Gi", "100Mi"
+    replica:
+      replicaCount: 0 # No replicas for a simple setup
+    # sentinel:
+    #   enabled: false # Disable Sentinel if not needed
+
+    # Password Management:
+    # Option 1: Set password directly (less secure, okay for local dev)
+    # auth:
+    #   enabled: true
+    #   password: "YOUR_REDIS_PASSWORD"
+
+    # Option 2: Use existing secret (e.g., created by SealedSecrets)
+    # This is recommended for production.
+    auth:
+      enabled: true
+      existingSecret: "redis-credentials" # Name of the K8s secret
+      existingSecretPasswordKey: "redis-password" # Key in the secret
