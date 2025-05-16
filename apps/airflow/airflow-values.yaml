@@ -16,7 +16,7 @@ data:
       persistence:
         enabled: true
         size: 10Gi
-        storageClassName: "standard"
+        storageClassName: "local-path"
       resources:
         requests:
           cpu: "250m"
