@@ -18,7 +18,7 @@ spec:
     primary:
       persistence:
         enabled: true
-        size: 200Gi
+        size: 500Gi
   valuesFrom:
     - kind: Secret
       name: postgresql-credentials # This is the name of the Secret that SealedSecrets will create
