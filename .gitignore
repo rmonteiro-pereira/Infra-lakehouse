@@ -5,3 +5,4 @@ talosconfig
 *.ps1
 mycert.yaml
 settings.json
+.vscode/settings.json
