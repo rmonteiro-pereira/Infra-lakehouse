@@ -10,12 +10,21 @@ spec:
     name: bitnami-postgresql
     namespace: flux-system
   values:
+    # Keep non-sensitive values here if you prefer
     auth:
-      postgresPassword: my-postgres-password
-      username: myuser
-      password: myuserpassword
-      database: mydatabase
+      username: vanir
+      database: vanir-postgres
+      # postgresPassword and password will come from the secret
     primary:
       persistence:
         enabled: true
-        size: 8Gi
+        size: 200Gi
+  valuesFrom:
+    - kind: Secret
+      name: postgresql-credentials # This is the name of the Secret that SealedSecrets will create
+      valuesKey: password # Key in the secret for the application user password
+      targetPath: auth.password # Path in Helm values to set
+    - kind: Secret
+      name: postgresql-credentials # This is the name of the Secret that SealedSecrets will create
+      valuesKey: postgres-password # Key in the secret for the superuser password
+      targetPath: auth.postgresPassword # Path in Helm values to set
