@@ -12,7 +12,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: bitnami
-        namespace: postgres
+        namespace: flux-system
   values:
     auth:
       postgresPassword: my-postgres-password
