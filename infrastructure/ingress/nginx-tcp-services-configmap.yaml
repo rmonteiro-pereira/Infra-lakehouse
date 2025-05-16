@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tcp-services # Must match the name in --tcp-services-configmap arg in the Deployment
+  namespace: ingress-nginx # Must be in the same namespace as the ingress controller
+data:
+  "5432": "postgres/postgresql:5432"
