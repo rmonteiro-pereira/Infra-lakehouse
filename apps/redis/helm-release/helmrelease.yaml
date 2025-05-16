@@ -20,7 +20,6 @@ spec:
     # Example: Disable persistence for a simple cache (adjust as needed)
     master:
       persistence:
-        persistence:
         enabled: true  # Set to true to enable persistence
         storageClass: "local-path" # Optional: specify a StorageClass, e.g., "your-sc-name". If empty or omitted, uses default SC.
         accessModes:
