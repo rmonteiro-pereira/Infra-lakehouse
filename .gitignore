@@ -4,3 +4,4 @@ talosconfig
 *.log
 *.ps1
 mycert.yaml
+settings.json
