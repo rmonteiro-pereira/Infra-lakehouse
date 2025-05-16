@@ -5,14 +5,10 @@ metadata:
   namespace: postgres
 spec:
   interval: 5m
-  chart:
-    spec:
-      chart: postgresql
-      version: 15.5.2    # Use the latest or your preferred version
-      sourceRef:
-        kind: OCIRepository
-        name: bitnami
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: bitnami-postgresql
+    namespace: flux-system
   values:
     auth:
       postgresPassword: my-postgres-password
