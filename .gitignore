@@ -3,4 +3,4 @@ talosconfig
 *.txt
 *.log
 *.ps1
-my-cert.yaml
+mycert.yaml
