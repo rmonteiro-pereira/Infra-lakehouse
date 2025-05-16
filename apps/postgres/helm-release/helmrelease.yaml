@@ -10,7 +10,7 @@ spec:
       chart: postgresql
       version: 15.5.2    # Use the latest or your preferred version
       sourceRef:
-        kind: HelmRepository
+        kind: OCIRepository
         name: bitnami
         namespace: flux-system
   values:
