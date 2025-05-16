@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 5m
-  path: "./apps/prometheus/helm-release" 
+  path: "./apps/postgres/helm-release" 
   prune: true
   sourceRef:
     kind: GitRepository
