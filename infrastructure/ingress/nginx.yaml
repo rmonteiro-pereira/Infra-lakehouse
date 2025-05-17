@@ -360,7 +360,7 @@ spec:
     protocol: TCP
     targetPort: https
   # Added for PostgreSQL TCP
-  - name: postgresql-tcp
+  - name: pgsql-tcp
     port: 5432
     protocol: TCP
     targetPort: 5432
@@ -481,7 +481,7 @@ spec:
           protocol: TCP
         # Added for PostgreSQL TCP target port on container
         - containerPort: 5432
-          name: postgresql-tcp-target
+          name: pg-tcp-target
           protocol: TCP
         readinessProbe:
           failureThreshold: 3
