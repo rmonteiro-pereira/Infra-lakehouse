@@ -26,7 +26,7 @@ spec:
     service:
       type: LoadBalancer
       # port: 5432 # This is the default internal port the service listens on
-      # loadBalancerIP: "YOUR_DESIRED_STATIC_IP_FROM_METALLB_POOL" # Optional: If you want to request a specific IP from your MetalLB pool
+      loadBalancerIP: "192.168.32.75" # Optional: If you want to request a specific IP from your MetalLB pool
       # annotations: {} # Optional: Add MetalLB specific annotations if needed, e.g., for IP address sharing or specific pool selection
                        # e.g., metallb.universe.tf/address-pool: <your-pool-name>
                        # e.g., metallb.universe.tf/allow-shared-ip: <key-for-sharing>
