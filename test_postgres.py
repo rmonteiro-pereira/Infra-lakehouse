@@ -4,7 +4,8 @@ from dotenv import load_dotenv
 
 load_dotenv() # Ensure your .env has PG_USER, PG_DB, PG_PASSWORD
 
-PG_HOST = "postgres.vanir-proxmox.duckdns.org"
+# PG_HOST = "postgres.vanir-proxmox.duckdns.org"
+PG_HOST = "192.168.32.75"
 PG_PORT = 5432
 PG_DB = os.getenv("PG_DB")
 PG_USER = os.getenv("PG_USER")
