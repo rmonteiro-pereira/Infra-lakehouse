@@ -12,54 +12,27 @@ data:
     executor: CeleryExecutor
 
     redis:
-      enabled: true
-      persistence:
-        enabled: true
-        size: 10Gi
-        storageClassName: "local-path"
-      resources:
-        requests:
-          cpu: "250m"
-          memory: "512Mi"
-        limits:
-          cpu: "500m"
-          memory: "1Gi"
+      enabled: false
+    postgresql:
+      enabled: false
+
+    metadataSecretName: airflow-pg-conn
+    brokerSecretName: airflow-redis-conn
 
     webserver:
       replicas: 2
-      resources:
-        requests:
-          cpu: "250m"
-          memory: "512Mi"
-        limits:
-          cpu: "500m"
-          memory: "1Gi"
       livenessProbe:
         initialDelaySeconds: 60
         periodSeconds: 30
 
     scheduler:
       replicas: 2
-      resources:
-        requests:
-          cpu: "250m"
-          memory: "512Mi"
-        limits:
-          cpu: "500m"
-          memory: "1Gi"
       livenessProbe:
         initialDelaySeconds: 120
         periodSeconds: 30
 
     workers:
       replicas: 2
-      resources:
-        requests:
-          cpu: "500m"
-          memory: "1Gi"
-        limits:
-          cpu: "1"
-          memory: "2Gi"
       terminationGracePeriodSeconds: 600
     
     createUserJob:
