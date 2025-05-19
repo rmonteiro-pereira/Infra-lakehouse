@@ -16,8 +16,8 @@ data:
     postgresql:
       enabled: false
 
-    metadataSecretName: airflow-pg-conn
-    brokerUrlSecretName: airflow-redis-conn
+    metadataSecretName: airflow-pg-conn-sealed
+    brokerUrlSecretName: airflow-redis-conn-sealed
 
     webserver:
       replicas: 2
