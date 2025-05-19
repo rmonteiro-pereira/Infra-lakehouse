@@ -17,7 +17,7 @@ data:
       enabled: false
 
     metadataSecretName: airflow-pg-conn
-    brokerSecretName: airflow-redis-conn
+    brokerUrlSecretName: airflow-redis-conn
 
     webserver:
       replicas: 2
