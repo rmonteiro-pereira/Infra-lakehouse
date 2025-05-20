@@ -16,8 +16,12 @@ data:
     postgresql:
       enabled: false
 
-    metadataSecretName: airflow-pg-conn
-    brokerUrlSecretName: airflow-redis-conn
+    # metadataSecretName: airflow-pg-conn
+    # brokerUrl: rediss://:Lazarus17@redis.vanir-proxmox.duckdns.org:6379/84?ssl_cert_reqs=none
+        
+    data:
+      metadataSecretName: airflow-pg-conn
+      brokerUrl: rediss://:Lazarus17@redis.vanir-proxmox.duckdns.org:6379/84?ssl_cert_reqs=none
 
     webserver:
       replicas: 2
