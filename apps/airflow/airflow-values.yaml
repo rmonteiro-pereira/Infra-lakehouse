@@ -24,6 +24,8 @@ data:
       livenessProbe:
         initialDelaySeconds: 60
         periodSeconds: 30
+      waitForMigrations:
+        enabled: true
 
     scheduler:
       replicas: 2
@@ -42,9 +44,8 @@ data:
       useHelmHooks: false
       applyCustomEnv: false
 
-    scheduler:
-      waitForMigrations:
-        enabled: true
+
+
 
 
 
