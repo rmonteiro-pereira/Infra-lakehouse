@@ -21,9 +21,7 @@ data:
     # It is a top-level key in the Helm chart's values.
     data:
       metadataSecretName: airflow-pg-conn-secret
-      metadataSecretKey: connection
       brokerUrlSecretName: airflow-redis-conn-secret
-      brokerUrlSecretKey: connection
 
     # Other top-level configurations
     users:
