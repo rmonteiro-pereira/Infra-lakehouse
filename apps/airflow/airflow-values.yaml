@@ -32,8 +32,8 @@ data:
     #   brokerUrl:  redis://:Lazarus17@redis-master-master.redis.svc.cluster.local:6379/84
 
     data:
-      metadataSecretName: airflow-pg-conn-secret
-      brokerUrlSecretName: airflow-redis-conn-secret
+      metadataSecretName: airflow-pg-conn
+      brokerUrlSecretName: airflow-redis-conn
 
     # Configure initial users
     # See: https://airflow.apache.org/docs/helm-chart/stable/parameters-ref.html#users
