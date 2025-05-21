@@ -23,6 +23,10 @@ data:
       metadataSecretName: airflow-pg-conn-secret
       brokerUrlSecretName: airflow-redis-conn-secret
 
+    defaultUser:
+      enabled: false
+      
+
     # Other top-level configurations
     users:
       - role: Admin
