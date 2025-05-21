@@ -46,6 +46,8 @@ data:
           name: airflow-admin-credentials # Name of the K8s secret for admin credentials
           key: password # Key in the secret that holds the password
 
+    webserverSecretKeySecretName: airflow-webserver-secret-key
+
     ingress:
       web:
         enabled: true 
