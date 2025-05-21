@@ -33,7 +33,9 @@ data:
 
     data:
       metadataSecretName: airflow-pg-conn-secret
+      metadataSecretKey: connection # Add this line
       brokerUrlSecretName: airflow-redis-conn-secret
+      brokerUrlSecretKey: connection # Add this line
 
     # Configure initial users
     # See: https://airflow.apache.org/docs/helm-chart/stable/parameters-ref.html#users
