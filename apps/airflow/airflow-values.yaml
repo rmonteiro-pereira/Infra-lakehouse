@@ -16,12 +16,20 @@ data:
     postgresql:
       enabled: false
 
-    # metadataSecretName: airflow-pg-conn
-    # brokerUrl: rediss://:Lazarus17@redis.vanir-proxmox.duckdns.org:6379/84?ssl_cert_reqs=none
+    # metadataSecretName: postgresql://airflow:airflow-1717@postgresql.postgres.svc.cluster.local:5432/airflow
+    # brokerUrl: redis://:Lazarus17@redis-master-master.redis.svc.cluster.local:6379/84
         
     data:
-      metadataSecretName: airflow-pg-conn
-      brokerUrl: rediss://:Lazarus17@redis.vanir-proxmox.duckdns.org:6379/84?ssl_cert_reqs=none
+      # metadataSecretName: airflow-pg-conn # Keep this commented out for direct insertion
+      metadataConnection: # This is an object with specific keys
+        host: "postgresql.postgres.svc.cluster.local" # Your internal Kubernetes service hostname for PostgreSQL
+        port: 5432
+        user: "airflow" # Replace with your actual PostgreSQL username
+        pass: "airflow-1717" # Replace with your actual PostgreSQL password - FOR TROUBLESHOOTING ONLY
+        db: "airflow" # Replace with your actual PostgreSQL database name
+        protocol: "postgresql" # Protocol for the connection
+        sslmode: "disable" # Or "require", "prefer", etc., based on your PostgreSQL SSL setup. "disable" is common for internal non-SSL connections.
+      brokerUrl:  redis://:Lazarus17@redis-master-master.redis.svc.cluster.local:6379/84
 
     webserver:
       replicas: 2
