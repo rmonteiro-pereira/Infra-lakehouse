@@ -9,6 +9,7 @@ metadata:
     app.kubernetes.io/managed-by: flux
 data:
   values.yaml: |
+    # Top-level Helm chart values start here
     executor: CeleryExecutor
 
     redis:
@@ -16,77 +17,36 @@ data:
     postgresql:
       enabled: false
 
-    # metadataSecretName: postgresql://airflow:airflow-1717@postgresql.postgres.svc.cluster.local:5432/airflow
-    # brokerUrl: redis://:Lazarus17@redis-master-master.redis.svc.cluster.local:6379/84
-        
-    # data:
-    #   # metadataSecretName: airflow-pg-conn # Keep this commented out for direct insertion
-    #   metadataConnection: # This is an object with specific keys
-    #     host: "postgresql.postgres.svc.cluster.local" # Your internal Kubernetes service hostname for PostgreSQL
-    #     port: 5432
-    #     user: "airflow" # Replace with your actual PostgreSQL username
-    #     pass: "airflow-1717" # Replace with your actual PostgreSQL password - FOR TROUBLESHOOTING ONLY
-    #     db: "airflow" # Replace with your actual PostgreSQL database name
-    #     protocol: "postgresql" # Protocol for the connection
-    #     sslmode: "disable" # Or "require", "prefer", etc., based on your PostgreSQL SSL setup. "disable" is common for internal non-SSL connections.
-    #   brokerUrl:  redis://:Lazarus17@redis-master-master.redis.svc.cluster.local:6379/84
-
+    # This 'data' block is for Airflow's internal data configurations
+    # It is a top-level key in the Helm chart's values.
     data:
       metadataSecretName: airflow-pg-conn-secret
-      metadataSecretKey: connection # Add this line
+      metadataSecretKey: connection
       brokerUrlSecretName: airflow-redis-conn-secret
-      brokerUrlSecretKey: connection # Add this line
+      brokerUrlSecretKey: connection
 
-    # Configure initial users
-    # See: https://airflow.apache.org/docs/helm-chart/stable/parameters-ref.html#users
+    # Other top-level configurations
     users:
       - role: Admin
         usernameFromSecretRef:
           name: airflow-admin-credentials
-          key: username # Key in the secret that holds the username
+          key: username
         passwordSecretRef:
-          name: airflow-admin-credentials # Name of the K8s secret for admin credentials
-          key: password # Key in the secret that holds the password
+          name: airflow-admin-credentials
+          key: password
 
     webserverSecretKeySecretName: airflow-webserver-secret-key
 
+    # Ingress is a top-level configuration
     ingress:
       web:
-        enabled: true 
-        # Optional: Specify your IngressClass name if you have multiple or a specific one
-        ingressClassName: "nginx" 
-
-        # Define your Ingress host and path
-        # This 'host' field is for a single, primary host.
-        host: airflow.vanir-proxmox.duckdns.org  
+        enabled: true
+        ingressClassName: "nginx"
+        host: airflow.vanir-proxmox.duckdns.org
         path: /
-        pathType: Prefix 
-
-        # If you need to define multiple host rules or more complex path routing,
-        # you would use the 'hosts' list. For a single host, the above 'host' field is often sufficient.
-        # hosts:
-        #   - name: airflow.yourdomain.com
-        #     paths:
-        #       - path: /
-        #         pathType: Prefix
-        #   - name: airflow-alias.yourdomain.com
-        #     paths:
-        #       - path: /
-        #         pathType: Prefix
-        
-        # Optional: Annotations for your Ingress controller
-        # annotations:
-        #   kubernetes.io/ingress.class: nginx
-        #   nginx.ingress.kubernetes.io/rewrite-target: /
-        #   nginx.ingress.kubernetes.io/ssl-redirect: "true" # If using TLS
-
-        tls:
-          enabled: false # Set to true if you are providing a TLS secret
-          # secretName: airflow-tls-secret # Name of the K8s secret containing your TLS cert and key
-          # The 'host' field under 'tls' is often not needed if 'secretName' is for the main 'host' above
-          # or if the certificate in the secret covers the host(s) defined.
-          # If your chart requires it or you have specific needs:
-          # host: airflow.yourdomain.com
+        pathType: Prefix
+      # tls:
+      #   enabled: false
 
 
 
