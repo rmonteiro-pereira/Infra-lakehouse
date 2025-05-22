@@ -5,19 +5,11 @@ import uuid # For generating random names
 import random # For generating random content
 import string # For character sets for random content
 
-# MinIO Connection Details
-# IMPORTANT: Ensure these details match your MinIO setup and Kubernetes secrets.
-# The MINIO_ENDPOINT should be the URL that routes to your MinIO API (port 9000 via Ingress).
+
 MINIO_ENDPOINT = "minio-api.vanir-proxmox.duckdns.org" # Hostname for MinIO API
-# The MinIO client typically handles http/https and port based on the `secure` flag and endpoint string.
-# If your Ingress serves HTTP on port 80 for minio.api.teste.local, this is fine.
-# If it's a different port, include it: "minio.api.teste.local:PORT"
-# MINIO_ACCESS_KEY = "Rodrigo"  # Replace with the value from your 'minio-secrets' (key: root-user)
-# MINIO_SECRET_KEY = ""  # Replace with the value from your 'minio-secrets' (key: root-password)
-MINIO_ACCESS_KEY = "Renato"  # Replace with the value from your 'minio-secrets' (key: root-user)
-MINIO_SECRET_KEY = ""  # Replace with the value from your 'minio-secrets' (key: root-password)
-# Set USE_SSL to True if your MinIO endpoint (via Ingress) is configured for HTTPS.
-# Assuming HTTP based on previous context.
+
+MINIO_ACCESS_KEY = "Renato"  
+MINIO_SECRET_KEY = ""  
 USE_SSL = False
 
 # --- Generate Random Bucket, Object, and Content Details ---
@@ -90,12 +82,12 @@ def main():
         print(f"'{OBJECT_NAME}' retrieved and read successfully.")
 
         # --- Clean up (Optional: Delete object and bucket) ---
-        # print(f"\nCleaning up: Deleting '{OBJECT_NAME}' from bucket '{BUCKET_NAME}'...")
-        # client.remove_object(BUCKET_NAME, OBJECT_NAME)
-        # print(f"'{OBJECT_NAME}' deleted successfully.")
-        # print(f"Cleaning up: Deleting bucket '{BUCKET_NAME}'...")
-        # client.remove_bucket(BUCKET_NAME)
-        # print(f"Bucket '{BUCKET_NAME}' deleted successfully.")
+        print(f"\nCleaning up: Deleting '{OBJECT_NAME}' from bucket '{BUCKET_NAME}'...")
+        client.remove_object(BUCKET_NAME, OBJECT_NAME)
+        print(f"'{OBJECT_NAME}' deleted successfully.")
+        print(f"Cleaning up: Deleting bucket '{BUCKET_NAME}'...")
+        client.remove_bucket(BUCKET_NAME)
+        print(f"Bucket '{BUCKET_NAME}' deleted successfully.")
 
 
     except S3Error as exc:
