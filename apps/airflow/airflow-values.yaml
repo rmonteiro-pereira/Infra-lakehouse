@@ -17,28 +17,12 @@ data:
     postgresql:
       enabled: false
 
-    # This 'data' block is for Airflow's internal data configurations
-    # It is a top-level key in the Helm chart's values.
     data:
       metadataSecretName: airflow-pg-conn-secret
       brokerUrlSecretName: airflow-redis-conn-secret
 
-  
-      
-
-    # # Other top-level configurations
-    # users:
-    #   - role: Admin
-    #     usernameFromSecretRef:
-    #       name: airflow-admin-credentials
-    #       key: username
-    #     passwordSecretRef:
-    #       name: airflow-admin-credentials
-    #       key: password
-
     webserverSecretKeySecretName: airflow-webserver-secret-key
 
-    # Ingress is a top-level configuration
     ingress:
       web:
         enabled: true
