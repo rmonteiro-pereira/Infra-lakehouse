@@ -24,7 +24,7 @@ def main():
     cur = conn.cursor()
 
     # Create database
-    cur.execute(f"SELECT 1 FROM pg_database WHERE datname = %s", (AIRFLOW_DB,))
+    cur.execute("SELECT 1 FROM pg_database WHERE datname = %s", (AIRFLOW_DB,))
     if not cur.fetchone():
         print(f"Creating database '{AIRFLOW_DB}'...")
         cur.execute(f"CREATE DATABASE {AIRFLOW_DB};")
@@ -32,7 +32,7 @@ def main():
         print(f"Database '{AIRFLOW_DB}' already exists.")
 
     # Create user
-    cur.execute(f"SELECT 1 FROM pg_roles WHERE rolname = %s", (AIRFLOW_USER,))
+    cur.execute("SELECT 1 FROM pg_roles WHERE rolname = %s", (AIRFLOW_USER,))
     if not cur.fetchone():
         print(f"Creating user '{AIRFLOW_USER}'...")
         cur.execute(f"CREATE USER {AIRFLOW_USER} WITH PASSWORD %s;", (AIRFLOW_PASSWORD,))
