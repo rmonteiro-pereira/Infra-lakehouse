@@ -12,17 +12,11 @@ data:
     # Bitnami Airflow Helm chart values
     executor: CeleryExecutor
 
-    # Image configuration - override at component level to use valid tag
-    dagProcessor:
-      image:
-        registry: docker.io
-        repository: bitnami/airflow
-        tag: "3.0.5"
-    triggerer:
-      image:
-        registry: docker.io
-        repository: bitnami/airflow
-        tag: "3.0.5"
+    # Global image configuration - override defaultImage to prevent debian suffix
+    defaultImage:
+      registry: docker.io
+      repository: bitnami/airflow
+      tag: "3.0.5"
 
     # Disable built-in database and redis subcharts (using external)
     postgresql:
