@@ -48,14 +48,14 @@ data:
         existingSecret: airflow-admin-credentials
         existingSecretKey: password
 
-    # Ingress configuration
+    # Ingress configuration - temporarily disabled to resolve conflict
     ingress:
-      enabled: true
-      ingressClassName: nginx
-      hostname: airflow.vanir-proxmox.duckdns.org
-      path: /
-      pathType: Prefix
-      tls: false
+      enabled: false
+      # ingressClassName: nginx
+      # hostname: airflow.vanir-proxmox.duckdns.org
+      # path: /
+      # pathType: Prefix
+      # tls: false
 
     # Webserver configuration
     webserver:
