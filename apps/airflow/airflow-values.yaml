@@ -12,6 +12,12 @@ data:
     # Bitnami Airflow Helm chart values
     executor: CeleryExecutor
 
+    # Image configuration - override to use a valid image tag
+    image:
+      registry: docker.io
+      repository: bitnami/airflow
+      tag: 3.0.5
+
     # Disable built-in database and redis subcharts (using external)
     postgresql:
       enabled: false
