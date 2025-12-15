@@ -68,6 +68,9 @@ data:
         enabled: true
         initialDelaySeconds: 30
         periodSeconds: 10
+        httpGet:
+          path: /health
+          port: http
 
     # Scheduler configuration
     scheduler:
