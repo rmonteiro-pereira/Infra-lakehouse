@@ -7,8 +7,7 @@ spec:
   interval: 1h
   url: oci://registry-1.docker.io/bitnamicharts/airflow
   ref:
-    # Specify a chart version tag. Find available tags on Artifact Hub or Bitnami's chart page.
-    # Example: use a specific version like '25.0.2'
-    tag: 25.0.2
+    # Use latest chart version - will automatically use compatible image tags
+    semver: ">=25.0.0"
 
 

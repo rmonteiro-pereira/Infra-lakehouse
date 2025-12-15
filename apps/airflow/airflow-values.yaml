@@ -12,12 +12,8 @@ data:
     # Bitnami Airflow Helm chart values
     executor: CeleryExecutor
 
-    # Image configuration - use latest available stable tag
-    # Bitnami chart uses defaultImage for all components
-    defaultImage:
-      registry: docker.io
-      repository: bitnami/airflow
-      tag: "3.0.5"
+    # Image configuration - let chart use its default compatible image
+    # Remove override to use chart's default image tag which should be valid
 
     # Disable built-in database and redis subcharts (using external)
     postgresql:
