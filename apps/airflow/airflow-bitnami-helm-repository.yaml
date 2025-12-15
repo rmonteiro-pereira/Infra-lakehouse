@@ -7,7 +7,7 @@ spec:
   interval: 1h
   url: oci://registry-1.docker.io/bitnamicharts/airflow
   ref:
-    # Use latest available chart version
-    tag: latest
+    # Use specific chart version - 25.0.2 is the current version
+    tag: 25.0.2
 
 
