@@ -7,7 +7,7 @@ spec:
   interval: 1h
   url: oci://registry-1.docker.io/bitnamicharts/airflow
   ref:
-    # Use latest chart version - will automatically use compatible image tags
-    semver: ">=25.0.0"
+    # Use latest available chart version
+    tag: latest
 
 
