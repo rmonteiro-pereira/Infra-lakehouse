@@ -12,10 +12,10 @@ data:
     # Bitnami Airflow Helm chart values
     executor: CeleryExecutor
 
-    # Global image configuration - override defaultImage to prevent debian suffix
+    # Global image configuration - use bitnamilegacy repository
     defaultImage:
       registry: docker.io
-      repository: bitnami/airflow
+      repository: bitnamilegacy/airflow
       tag: "3.0.5"
 
     # Disable built-in database and redis subcharts (using external)
@@ -68,7 +68,7 @@ data:
       replicas: 2
       image:
         registry: docker.io
-        repository: bitnami/airflow
+        repository: bitnamilegacy/airflow
         tag: "3.0.5"
       livenessProbe:
         enabled: true
@@ -81,7 +81,7 @@ data:
       replicas: 2
       image:
         registry: docker.io
-        repository: bitnami/airflow
+        repository: bitnamilegacy/airflow
         tag: "3.0.5"
       livenessProbe:
         enabled: true
@@ -97,7 +97,7 @@ data:
       replicas: 2
       image:
         registry: docker.io
-        repository: bitnami/airflow
+        repository: bitnamilegacy/airflow
         tag: "3.0.5"
       terminationGracePeriodSeconds: 600
       livenessProbe:
