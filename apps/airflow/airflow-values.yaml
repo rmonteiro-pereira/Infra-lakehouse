@@ -12,18 +12,25 @@ data:
     # Bitnami Airflow Helm chart values
     executor: CeleryExecutor
 
-    # Global image configuration - Bitnami charts use global.imageRegistry and global.imageRepository
+    # Try multiple image override approaches - Bitnami chart may construct tags differently
+    # Approach 1: Global settings (standard for Bitnami charts)
     global:
       imageRegistry: docker.io
       imageRepository: bitnamilegacy/airflow
-      # Override default image tag - chart may append debian suffix, so we use base tag
-      imageTag: "3.0.5"
     
-    # Also set defaultImage as fallback
+    # Approach 2: DefaultImage with full image string attempt
     defaultImage:
       registry: docker.io
       repository: bitnamilegacy/airflow
+      # Try providing the full expected tag to see if chart uses it as-is
       tag: "3.0.5"
+    
+    # Approach 3: Component-level overrides with explicit image
+    webserver:
+      image:
+        registry: docker.io
+        repository: bitnamilegacy/airflow
+        tag: "3.0.5"
 
     # Disable built-in database and redis subcharts (using external)
     postgresql:

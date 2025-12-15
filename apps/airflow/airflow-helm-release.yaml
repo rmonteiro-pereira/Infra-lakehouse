@@ -13,6 +13,13 @@ spec:
     timeout: 15m0s   # <-- extend install timeout (default is 5m0s)
   upgrade:
     timeout: 15m0s   # <-- extend upgrade timeout
+  postRenderers:
+    - kustomize:
+        images:
+          # Replace the non-existent bitnami image with bitnamilegacy
+          - name: docker.io/bitnami/airflow
+            newName: docker.io/bitnamilegacy/airflow
+            newTag: "3.0.5"
   valuesFrom:
     - kind: ConfigMap
       name: airflow-values
