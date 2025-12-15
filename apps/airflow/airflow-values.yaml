@@ -17,7 +17,7 @@ data:
     defaultImage:
       registry: docker.io
       repository: bitnami/airflow
-      tag: 3.1.4
+      tag: "3.0.5"
 
     # Disable built-in database and redis subcharts (using external)
     postgresql:
