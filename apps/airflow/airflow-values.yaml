@@ -9,56 +9,90 @@ metadata:
     app.kubernetes.io/managed-by: flux
 data:
   values.yaml: |
-    # Top-level Helm chart values start here
+    # Bitnami Airflow Helm chart values
     executor: CeleryExecutor
 
-    redis:
-      enabled: false
+    # Disable built-in database and redis subcharts (using external)
     postgresql:
       enabled: false
+    redis:
+      enabled: false
 
-    data:
-      metadataSecretName: airflow-pg-conn-secret
-      brokerUrlSecretName: airflow-redis-conn-secret
+    # External database configuration
+    externalDatabase:
+      host: postgresql.postgres.svc.cluster.local
+      port: 5432
+      database: vanir-postgres
+      user: vanir
+      existingSecret: airflow-pg-conn-secret
+      existingSecretPasswordKey: connection
 
-    webserverSecretKeySecretName: airflow-webserver-secret-key
+    # External Redis configuration
+    externalRedis:
+      host: redis-master.redis.svc.cluster.local
+      port: 6379
+      existingSecret: airflow-redis-conn-secret
+      existingSecretPasswordKey: connection
 
+    # Secret key for webserver
+    secretKey:
+      existingSecret: airflow-webserver-secret-key
+      existingSecretKey: webserver-secret-key
+
+    # Admin user configuration
+    auth:
+      username:
+        existingSecret: airflow-admin-credentials
+        existingSecretKey: username
+      password:
+        existingSecret: airflow-admin-credentials
+        existingSecretKey: password
+
+    # Ingress configuration
     ingress:
-      web:
-        enabled: true
-        ingressClassName: "nginx"
-        host: airflow.vanir-proxmox.duckdns.org
-        path: /
-        pathType: Prefix
-      # tls:
-      #   enabled: false
+      enabled: true
+      ingressClassName: nginx
+      hostname: airflow.vanir-proxmox.duckdns.org
+      path: /
+      pathType: Prefix
+      tls: false
 
-
-
+    # Webserver configuration
     webserver:
       replicas: 2
       livenessProbe:
+        enabled: true
         initialDelaySeconds: 60
         periodSeconds: 30
-      waitForMigrations:
+      readinessProbe:
         enabled: true
+        initialDelaySeconds: 30
+        periodSeconds: 10
 
+    # Scheduler configuration
     scheduler:
       replicas: 2
       livenessProbe:
+        enabled: true
         initialDelaySeconds: 120
         periodSeconds: 30
+      readinessProbe:
+        enabled: true
+        initialDelaySeconds: 60
+        periodSeconds: 10
 
+    # Worker configuration
     workers:
       replicas: 2
       terminationGracePeriodSeconds: 600
-    
-    createUserJob:
-      useHelmHooks: false
-      applyCustomEnv: false
-    migrateDatabaseJob:
-      useHelmHooks: false
-      applyCustomEnv: false
+      livenessProbe:
+        enabled: true
+        initialDelaySeconds: 120
+        periodSeconds: 30
+      readinessProbe:
+        enabled: true
+        initialDelaySeconds: 60
+        periodSeconds: 10
 
 
 
