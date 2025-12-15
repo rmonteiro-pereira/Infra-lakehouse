@@ -5,15 +5,10 @@ metadata:
   namespace: airflow
 spec:
   interval: 15m
-  chart:
-    spec:
-      chart: airflow
-      # Optionally pin to a specific Bitnami chart version, e.g. "20.0.0"
-      # version: "20.0.0"
-      sourceRef:
-        kind: HelmRepository
-        name: bitnami
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: bitnami-airflow
+    namespace: flux-system
   install:
     timeout: 15m0s   # <-- extend install timeout (default is 5m0s)
   upgrade:

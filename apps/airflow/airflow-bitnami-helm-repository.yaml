@@ -1,10 +1,14 @@
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
 metadata:
-  name: bitnami
+  name: bitnami-airflow
   namespace: flux-system
 spec:
   interval: 1h
-  url: https://charts.bitnami.com/bitnami
+  url: oci://registry-1.docker.io/bitnamicharts/airflow
+  ref:
+    # Specify a chart version tag. Find available tags on Artifact Hub or Bitnami's chart page.
+    # Example: use a specific version like '25.0.2'
+    tag: 25.0.2
 
 
