@@ -12,8 +12,17 @@ data:
     # Bitnami Airflow Helm chart values
     executor: CeleryExecutor
 
-    # Image configuration - let chart use its default compatible image
-    # Remove override to use chart's default image tag which should be valid
+    # Image configuration - override at component level to use valid tag
+    dagProcessor:
+      image:
+        registry: docker.io
+        repository: bitnami/airflow
+        tag: "3.0.5"
+    triggerer:
+      image:
+        registry: docker.io
+        repository: bitnami/airflow
+        tag: "3.0.5"
 
     # Disable built-in database and redis subcharts (using external)
     postgresql:
@@ -63,6 +72,10 @@ data:
     # Webserver configuration
     webserver:
       replicas: 2
+      image:
+        registry: docker.io
+        repository: bitnami/airflow
+        tag: "3.0.5"
       livenessProbe:
         enabled: true
         initialDelaySeconds: 60
@@ -72,6 +85,10 @@ data:
     # Scheduler configuration
     scheduler:
       replicas: 2
+      image:
+        registry: docker.io
+        repository: bitnami/airflow
+        tag: "3.0.5"
       livenessProbe:
         enabled: true
         initialDelaySeconds: 120
@@ -84,6 +101,10 @@ data:
     # Worker configuration
     workers:
       replicas: 2
+      image:
+        registry: docker.io
+        repository: bitnami/airflow
+        tag: "3.0.5"
       terminationGracePeriodSeconds: 600
       livenessProbe:
         enabled: true
