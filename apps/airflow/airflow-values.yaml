@@ -28,17 +28,17 @@ data:
     externalDatabase:
       host: postgresql.postgres.svc.cluster.local
       port: 5432
-      database: vanir-postgres
-      user: vanir
+      database: airflow
+      user: airflow
       existingSecret: airflow-pg-conn-secret
-      existingSecretPasswordKey: connection
+      existingSecretPasswordKey: password
 
     # External Redis configuration
     externalRedis:
       host: redis-master.redis.svc.cluster.local
       port: 6379
       existingSecret: airflow-redis-conn-secret
-      existingSecretPasswordKey: connection
+      existingSecretPasswordKey: password
 
     # Secret key for webserver
     secretKey:
