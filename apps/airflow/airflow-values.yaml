@@ -64,13 +64,7 @@ data:
         enabled: true
         initialDelaySeconds: 60
         periodSeconds: 30
-      readinessProbe:
-        enabled: true
-        initialDelaySeconds: 30
-        periodSeconds: 10
-        httpGet:
-          path: /health
-          port: http
+      # readinessProbe - using Bitnami chart defaults to avoid tcpSocket/httpGet conflict
 
     # Scheduler configuration
     scheduler:
