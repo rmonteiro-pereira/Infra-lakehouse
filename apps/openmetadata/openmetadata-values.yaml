@@ -19,18 +19,19 @@ data:
     airflow:
       enabled: false
     
-    # Configure PostgreSQL database connection
-    # Based on OpenMetadata Helm chart structure: openmetadata.config.database
+    # Configure PostgreSQL database connection for OpenMetadata chart v1.11.x
+    # Using correct schema: openmetadata.config.database with host/port/driverClass/dbScheme
     openmetadata:
       config:
         database:
-          type: postgres
           host: "postgresql.postgres.svc.cluster.local"
           port: 5432
-          username: "openmetadata_user"
-          database: "openmetadata_db"
-          # Use passwordSecret to reference Kubernetes secret
-          passwordSecret:
-            name: "openmetadata-db-secret"
-            key: "password"
+          driverClass: "org.postgresql.Driver"
+          dbScheme: "postgresql"
+          databaseName: "openmetadata_db"
+          auth:
+            username: "openmetadata_user"
+            password:
+              secretRef: "openmetadata-db-secret"
+              secretKey: "password"
 
