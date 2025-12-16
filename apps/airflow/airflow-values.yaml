@@ -59,6 +59,10 @@ data:
     migrateDatabaseJob:
       useHelmHooks: false
       applyCustomEnv: false
+      image:
+        registry: docker.io
+        repository: bitnamilegacy/airflow
+        tag: "3.0.5"
 
     # Secret key for webserver
     secretKey:

@@ -17,7 +17,12 @@ spec:
     - kustomize:
         images:
           # Replace the non-existent bitnami image with bitnamilegacy
+          # Match any tag pattern (e.g., 3.0.5-debian-12-r0) and replace with 3.0.5
           - name: docker.io/bitnami/airflow
+            newName: docker.io/bitnamilegacy/airflow
+            newTag: "3.0.5"
+          # Also match the full image reference pattern used by the chart
+          - name: docker.io/bitnami/airflow:3.0.5-debian-12-r0
             newName: docker.io/bitnamilegacy/airflow
             newTag: "3.0.5"
   valuesFrom:
