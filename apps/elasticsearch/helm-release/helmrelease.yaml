@@ -38,11 +38,13 @@ spec:
         discovery.type: single-node
     
     # Extra environment variables
+    # Note: The Elasticsearch chart creates the secret as elasticsearch-master-credentials
+    # We need to use that name or create our own secret with the expected name
     extraEnvs:
       - name: ELASTIC_PASSWORD
         valueFrom:
           secretKeyRef:
-            name: elasticsearch-credentials
+            name: elasticsearch-master-credentials
             key: password
     
     # Resources - reduced for faster startup
