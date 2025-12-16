@@ -20,9 +20,7 @@ data:
       enabled: false
     
     # Configure PostgreSQL database connection via environment variables
-    # The OpenMetadata chart generates openmetadata-config-secret based on MySQL subchart
-    # Since we disabled MySQL, we need to override via openMetadataServerSpec.extraEnv
-    # These env vars will override the config secret values
+    # Using openMetadataServerSpec.extraEnv to override database configuration
     openMetadataServerSpec:
       extraEnv:
         - name: DB_DRIVER_CLASS
