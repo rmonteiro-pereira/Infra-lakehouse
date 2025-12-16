@@ -18,4 +18,28 @@ data:
       enabled: false
     airflow:
       enabled: false
+    
+    # Configure PostgreSQL database connection
+    # Override database configuration to use PostgreSQL instead of MySQL
+    openMetadataServerSpec:
+      env:
+        - name: DB_DRIVER_CLASS
+          value: "org.postgresql.Driver"
+        - name: DB_HOST
+          value: "postgresql.postgres.svc.cluster.local"
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_USER
+          value: "openmetadata_user"
+        - name: OM_DATABASE
+          value: "openmetadata_db"
+        - name: DB_SCHEME
+          value: "postgresql"
+        - name: DB_PARAMS
+          value: "useSSL=false"
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: openmetadata-db-secret
+              key: password
 
