@@ -21,6 +21,19 @@ data:
     
     # Configure PostgreSQL database connection
     # Override database configuration to use PostgreSQL instead of MySQL
+    # The chart generates openmetadata-config-secret with DB_* environment variables
+    database:
+      driverClass: "org.postgresql.Driver"
+      host: "postgresql.postgres.svc.cluster.local"
+      port: 5432
+      user: "openmetadata_user"
+      dbName: "openmetadata_db"
+      scheme: "postgresql"
+      passwordSecret:
+        name: "openmetadata-db-secret"
+        key: "password"
+    
+    # Also set environment variables for both init and main containers
     openMetadataServerSpec:
       env:
         - name: DB_DRIVER_CLASS
@@ -36,8 +49,13 @@ data:
         - name: DB_SCHEME
           value: "postgresql"
         - name: DB_PARAMS
-          value: "useSSL=false"
+          value: ""
         - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: openmetadata-db-secret
+              key: password
+        - name: DB_USER_PASSWORD
           valueFrom:
             secretKeyRef:
               name: openmetadata-db-secret
