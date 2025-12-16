@@ -7,5 +7,5 @@ spec:
   interval: 1h
   url: oci://registry-1.docker.io/bitnamicharts/kafka
   ref:
-    # Use latest stable version - omit tag to get latest
+    tag: 28.4.1
 
