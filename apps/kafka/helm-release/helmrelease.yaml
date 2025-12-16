@@ -11,6 +11,13 @@ spec:
     namespace: flux-system
   releaseName: kafka
   targetNamespace: kafka
+  postRenderers:
+    - kustomize:
+        images:
+          # Replace bitnami images with bitnamilegacy
+          - name: docker.io/bitnami/kafka
+            newName: docker.io/bitnamilegacy/kafka
+            # Keep the tag as-is - chart will provide the version
   values:
     # Single broker setup
     replicaCount: 1
