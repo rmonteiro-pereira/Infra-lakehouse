@@ -18,23 +18,4 @@ data:
       enabled: false
     airflow:
       enabled: false
-    
-    # Minimal OpenMetadata configuration
-    # Note: Most configuration should be done via ConfigMap/Secret mounts
-    # This is a basic setup - advanced config via openmetadata.yaml
-    openmetadata:
-      config:
-        database:
-          type: postgres
-          host: postgresql.postgres.svc.cluster.local
-          port: 5432
-          database: openmetadata_db
-          username: openmetadata_user
-          password:
-            existingSecret: openmetadata-db-secret
-            existingSecretKey: password
-    
-    # Basic ingress
-    ingress:
-      enabled: true
 
