@@ -20,44 +20,17 @@ data:
       enabled: false
     
     # Configure PostgreSQL database connection
-    # Override the database configuration that gets written to openmetadata-config-secret
-    # The chart generates this secret with DB_* environment variables from MySQL subchart by default
-    # We need to override these by providing custom config or environment variables
-    openMetadataConfig:
+    # Based on OpenMetadata Helm chart structure: openmetadata.database section
+    openmetadata:
       database:
-        driverClass: "org.postgresql.Driver"
-        url: "jdbc:postgresql://postgresql.postgres.svc.cluster.local:5432/openmetadata_db"
+        host: "postgresql.postgres.svc.cluster.local"
+        port: 5432
         user: "openmetadata_user"
-        passwordSecret:
-          name: "openmetadata-db-secret"
-          key: "password"
-    
-    # Set environment variables that override the config secret values
-    # These will be added to both init and main containers
-    openMetadataServerSpec:
-      extraEnv:
-        - name: DB_DRIVER_CLASS
-          value: "org.postgresql.Driver"
-        - name: DB_HOST
-          value: "postgresql.postgres.svc.cluster.local"
-        - name: DB_PORT
-          value: "5432"
-        - name: DB_USER
-          value: "openmetadata_user"
-        - name: OM_DATABASE
-          value: "openmetadata_db"
-        - name: DB_SCHEME
-          value: "postgresql"
-        - name: DB_PARAMS
-          value: ""
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: openmetadata-db-secret
-              key: password
-        - name: DB_USER_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: openmetadata-db-secret
-              key: password
+        # Password can be provided via existingSecret
+        existingSecret: "openmetadata-db-secret"
+        existingSecretKey: "password"
+        database: "openmetadata_db"
+        # SSL configuration
+        sslMode: "disable"
+        connectionOptions: {}
 
