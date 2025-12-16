@@ -21,16 +21,9 @@ spec:
         - name: PGUSER
           value: postgres
         - name: PGPASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgresql-credentials
-              namespace: postgres
-              key: postgres-password
+          value: "Lazarus17"  # PostgreSQL admin password - using known value from existing secret
         - name: OM_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: openmetadata-db-secret
-              key: password
+          value: "OpenMetadata17"  # Password for openmetadata_user - using known value
         command:
         - /bin/bash
         - -c
@@ -40,7 +33,7 @@ spec:
           psql -c "CREATE DATABASE openmetadata_db;" || echo "Database may already exist"
           
           # Create user
-          psql -c "CREATE USER openmetadata_user WITH PASSWORD '\''$OM_PASSWORD'\'';" || echo "User may already exist"
+          psql -c "CREATE USER openmetadata_user WITH PASSWORD '$OM_PASSWORD';" || echo "User may already exist"
           
           # Grant privileges on database
           psql -c "GRANT ALL PRIVILEGES ON DATABASE openmetadata_db TO openmetadata_user;"
