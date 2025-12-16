@@ -6,5 +6,6 @@ metadata:
 spec:
   interval: 1h
   url: oci://registry-1.docker.io/bitnamicharts/kafka
+  ref:
     tag: "28.3.0"
 
