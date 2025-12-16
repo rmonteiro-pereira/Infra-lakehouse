@@ -1,0 +1,24 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: openmetadata
+  namespace: openmetadata
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: openmetadata
+      sourceRef:
+        kind: HelmRepository
+        name: open-metadata
+        namespace: flux-system
+      version: 1.5.0  # Use latest stable version
+  install:
+    timeout: 15m0s
+  upgrade:
+    timeout: 15m0s
+  valuesFrom:
+    - kind: ConfigMap
+      name: openmetadata-values
+      valuesKey: values.yaml
+

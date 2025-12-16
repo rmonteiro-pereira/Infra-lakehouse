@@ -1,0 +1,86 @@
+# apps/openmetadata/openmetadata-values.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openmetadata-values
+  namespace: openmetadata
+  labels:
+    app.kubernetes.io/part-of: openmetadata
+    app.kubernetes.io/managed-by: flux
+data:
+  values.yaml: |
+    # Disable MySQL subchart - using existing PostgreSQL
+    mysql:
+      enabled: false
+    
+    # Elasticsearch configuration - using external Elasticsearch
+    elasticsearch:
+      enabled: false
+    
+    # Kafka configuration - using external Kafka
+    kafka:
+      enabled: false
+    
+    # Airflow integration - use existing Airflow
+    airflow:
+      enabled: false
+    
+    # OpenMetadata configuration
+    openmetadata:
+      config:
+        # PostgreSQL database configuration
+        database:
+          type: postgres
+          driverClass: org.postgresql.Driver
+          host: postgresql.postgres.svc.cluster.local
+          port: 5432
+          database: openmetadata_db
+          username: openmetadata_user
+          password:
+            existingSecret: openmetadata-db-secret
+            existingSecretKey: password
+        
+        # External Elasticsearch connection
+        elasticsearch:
+          host: elasticsearch-master.elasticsearch.svc.cluster.local
+          port: 9200
+          username: elastic
+          password:
+            existingSecret: openmetadata-elasticsearch-secret
+            existingSecretKey: password
+        
+        # External Kafka connection
+        eventPublisher:
+          enabled: true
+          type: kafka
+          kafka:
+            brokers:
+              - kafka.kafka.svc.cluster.local:9092
+        
+        # External Airflow connection
+        pipelineServiceClientConfig:
+          enabled: true
+          type: airflow
+          host: http://airflow-web.airflow.svc.cluster.local
+          port: 8080
+          username: admin
+          password:
+            existingSecret: airflow-admin-credentials
+            existingSecretKey: password
+      
+      # Admin user configuration
+      admin:
+        username: admin
+        password:
+          existingSecret: openmetadata-admin-secret
+          existingSecretKey: password
+    
+    # Ingress configuration
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      hostname: openmetadata.vanir-proxmox.duckdns.org
+      path: /
+      pathType: Prefix
+      tls: false
+

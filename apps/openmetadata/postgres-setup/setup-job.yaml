@@ -1,0 +1,52 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: setup-openmetadata-db
+  namespace: openmetadata
+spec:
+  ttlSecondsAfterFinished: 3600
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: postgres-setup
+        image: postgres:16
+        env:
+        - name: PGHOST
+          value: postgresql.postgres.svc.cluster.local
+        - name: PGPORT
+          value: "5432"
+        - name: PGDATABASE
+          value: postgres
+        - name: PGUSER
+          value: postgres
+        - name: PGPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgresql-credentials
+              namespace: postgres
+              key: postgres-password
+        - name: OM_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: openmetadata-db-secret
+              key: password
+        command:
+        - /bin/bash
+        - -c
+        - |
+          set -e
+          # Create database
+          psql -c "CREATE DATABASE openmetadata_db;" || echo "Database may already exist"
+          
+          # Create user
+          psql -c "CREATE USER openmetadata_user WITH PASSWORD '\''$OM_PASSWORD'\'';" || echo "User may already exist"
+          
+          # Grant privileges on database
+          psql -c "GRANT ALL PRIVILEGES ON DATABASE openmetadata_db TO openmetadata_user;"
+          
+          # Connect to the new database and grant schema privileges
+          psql -d openmetadata_db -c "GRANT ALL ON SCHEMA public TO openmetadata_user;"
+          
+          echo "OpenMetadata database and user created successfully"
+

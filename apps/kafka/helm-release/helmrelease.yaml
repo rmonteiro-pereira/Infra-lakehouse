@@ -1,0 +1,44 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kafka
+  namespace: kafka
+spec:
+  interval: 5m
+  chartRef:
+    kind: OCIRepository
+    name: bitnami-kafka
+    namespace: flux-system
+  releaseName: kafka
+  targetNamespace: kafka
+  values:
+    # Single broker setup
+    replicaCount: 1
+    
+    # Persistent storage
+    persistence:
+      enabled: true
+      storageClass: local-path
+      size: 100Gi
+    
+    # Authentication - simple password for now
+    auth:
+      clientProtocol: sasl
+      interBrokerProtocol: plaintext
+      jaas:
+        clientUsers:
+          - admin
+        clientPasswords:
+          - admin
+        interBrokerUser: admin
+        interBrokerPassword: admin
+    
+    # Resources
+    resources:
+      requests:
+        cpu: "500m"
+        memory: "1Gi"
+      limits:
+        cpu: "1000m"
+        memory: "2Gi"
+
