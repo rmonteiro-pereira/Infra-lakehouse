@@ -18,11 +18,9 @@ spec:
         namespace: flux-system
       # Use latest version - omit version to get latest
   values:
-    # Single node setup - disable cluster.initial_master_nodes
+    # Single node setup
     replicas: 1
-    
-    # Disable cluster bootstrapping for single-node mode
-    clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
+    minimumMasterNodes: 1
     
     # Persistent storage
     volumeClaimTemplate:
@@ -32,16 +30,13 @@ spec:
         requests:
           storage: 100Gi
     
-    # Security settings - single-node mode configured here
+    # Security settings - NOT using discovery.type: single-node
+    # Instead, let the chart handle cluster bootstrapping
     esConfig:
       elasticsearch.yml: |
         xpack.security.enabled: true
         xpack.security.transport.ssl.enabled: true
         xpack.security.http.ssl.enabled: false
-        discovery.type: single-node
-    
-    # Disable master node bootstrapping (conflicts with single-node)
-    clusterInitialMasterNodes: ""
     
     # Extra environment variables
     extraEnvs:
