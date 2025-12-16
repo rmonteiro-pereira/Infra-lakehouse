@@ -12,8 +12,8 @@ spec:
         kind: HelmRepository
         name: open-metadata
         namespace: flux-system
-      # Use latest version for better PostgreSQL support
-      # version: 1.5.0
+      # Try version 1.6.x for better PostgreSQL support
+      version: ">=1.6.0"
   install:
     timeout: 15m0s
   upgrade:
