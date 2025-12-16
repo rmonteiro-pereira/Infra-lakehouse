@@ -8,8 +8,8 @@ import string # For character sets for random content
 
 MINIO_ENDPOINT = "minio-api.vanir-proxmox.duckdns.org" # Hostname for MinIO API
 
-MINIO_ACCESS_KEY = "Renato"  
-MINIO_SECRET_KEY = ""  
+MINIO_ACCESS_KEY = "Rodrigo"  
+MINIO_SECRET_KEY = "Lazarus17"  
 USE_SSL = False
 
 # --- Generate Random Bucket, Object, and Content Details ---

@@ -67,20 +67,17 @@ data:
           password:
             existingSecret: airflow-admin-credentials
             existingSecretKey: password
-      
-      # Admin user configuration
-      admin:
-        username: admin
-        password:
-          existingSecret: openmetadata-admin-secret
-          existingSecretKey: password
     
-    # Ingress configuration
+    # Ingress configuration - using standard Kubernetes ingress structure
     ingress:
       enabled: true
-      ingressClassName: nginx
-      hostname: openmetadata.vanir-proxmox.duckdns.org
-      path: /
-      pathType: Prefix
-      tls: false
+      className: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: ""
+      hosts:
+        - host: openmetadata.vanir-proxmox.duckdns.org
+          paths:
+            - path: /
+              pathType: Prefix
+      tls: []
 

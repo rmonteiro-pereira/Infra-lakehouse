@@ -12,7 +12,7 @@ spec:
         kind: HelmRepository
         name: elastic
         namespace: flux-system
-      version: 8.15.0  # Use specific 8.x version
+      # Use latest version - omit version to get latest
   values:
     # Single node setup for simplicity
     replicas: 1

@@ -1,0 +1,1 @@
+MINIO_ENDPOINT = "minio-api.vanir-proxmox.duckdns.org"
