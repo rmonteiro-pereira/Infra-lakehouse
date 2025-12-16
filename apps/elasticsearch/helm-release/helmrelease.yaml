@@ -18,8 +18,11 @@ spec:
         namespace: flux-system
       # Use latest version - omit version to get latest
   values:
-    # Single node setup for simplicity
+    # Single node setup - disable cluster.initial_master_nodes
     replicas: 1
+    
+    # Disable cluster bootstrapping for single-node mode
+    clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
     
     # Persistent storage
     volumeClaimTemplate:
@@ -29,7 +32,7 @@ spec:
         requests:
           storage: 100Gi
     
-    # Security settings
+    # Security settings - single-node mode configured here
     esConfig:
       elasticsearch.yml: |
         xpack.security.enabled: true
@@ -37,9 +40,10 @@ spec:
         xpack.security.http.ssl.enabled: false
         discovery.type: single-node
     
+    # Disable master node bootstrapping (conflicts with single-node)
+    clusterInitialMasterNodes: ""
+    
     # Extra environment variables
-    # Note: The Elasticsearch chart creates the secret as elasticsearch-master-credentials
-    # We need to use that name or create our own secret with the expected name
     extraEnvs:
       - name: ELASTIC_PASSWORD
         valueFrom:
@@ -47,7 +51,7 @@ spec:
             name: elasticsearch-master-credentials
             key: password
     
-    # Resources - reduced for faster startup
+    # Resources
     resources:
       requests:
         cpu: "500m"
