@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: openmetadata
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  namespaceSelector:
+    matchNames:
+      - openmetadata
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: openmetadata
+  endpoints:
+    - port: http
+      path: /api/v1/system/metrics
+      interval: 30s
+

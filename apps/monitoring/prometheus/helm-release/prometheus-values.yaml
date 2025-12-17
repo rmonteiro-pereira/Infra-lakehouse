@@ -14,6 +14,12 @@ data:
               resources:
                 requests:
                   storage: 10Gi
+        # Enable service discovery across all namespaces
+        serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelectorNilUsesHelmValues: false
+        ruleSelectorNilUsesHelmValues: false
+        serviceMonitorSelector: {}
+        podMonitorSelector: {}
     
     grafana:
       adminPassword: "admin"  # Override in production!
@@ -21,6 +27,45 @@ data:
         enabled: true
         storageClassName: local-path
         size: 10Gi
+      # Add Loki as datasource
+      additionalDataSources:
+        - name: Loki
+          type: loki
+          url: http://loki-gateway.loki.svc.cluster.local
+          access: proxy
+          isDefault: false
+          jsonData:
+            maxLines: 1000
+      # Pre-installed dashboards
+      dashboardProviders:
+        dashboardproviders.yaml:
+          apiVersion: 1
+          providers:
+            - name: 'default'
+              orgId: 1
+              folder: ''
+              type: file
+              disableDeletion: false
+              editable: true
+              options:
+                path: /var/lib/grafana/dashboards/default
+      dashboards:
+        default:
+          # Kubernetes cluster monitoring
+          kubernetes-cluster:
+            gnetId: 7249
+            revision: 1
+            datasource: Prometheus
+          # Node exporter
+          node-exporter:
+            gnetId: 1860
+            revision: 37
+            datasource: Prometheus
+          # Loki logs
+          loki-logs:
+            gnetId: 13639
+            revision: 2
+            datasource: Loki
     
     alertmanager:
       alertmanagerSpec:
