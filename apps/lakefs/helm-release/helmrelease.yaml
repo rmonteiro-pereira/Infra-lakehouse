@@ -50,12 +50,10 @@ spec:
     # Ingress
     ingress:
       enabled: true
-      className: nginx
+      ingressClassName: nginx
       hosts:
-        - host: lakefs.vanir-proxmox.duckdns.org
-          paths:
-            - path: /
-              pathType: Prefix
+        - lakefs.vanir-proxmox.duckdns.org
+      path: /
     
     # Resources
     resources:
