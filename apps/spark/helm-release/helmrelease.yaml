@@ -22,11 +22,11 @@ spec:
       replicaCount: 1
       resources:
         requests:
-          cpu: "500m"
-          memory: "1Gi"
+          cpu: "100m"
+          memory: "512Mi"
         limits:
-          cpu: "2000m"
-          memory: "4Gi"
+          cpu: "1000m"
+          memory: "2Gi"
       persistence:
         enabled: true
         storageClass: local-path
@@ -34,14 +34,14 @@ spec:
     
     # Worker configuration
     worker:
-      replicaCount: 2
+      replicaCount: 1
       resources:
         requests:
-          cpu: "500m"
-          memory: "2Gi"
+          cpu: "100m"
+          memory: "512Mi"
         limits:
-          cpu: "2000m"
-          memory: "4Gi"
+          cpu: "1000m"
+          memory: "2Gi"
       persistence:
         enabled: true
         storageClass: local-path
