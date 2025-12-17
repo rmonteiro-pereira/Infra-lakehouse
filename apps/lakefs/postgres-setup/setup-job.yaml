@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: setup-lakefs-db
+  namespace: lakefs
+spec:
+  ttlSecondsAfterFinished: 3600
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: postgres-setup
+        image: postgres:16
+        env:
+        - name: PGHOST
+          value: postgresql.postgres.svc.cluster.local
+        - name: PGPORT
+          value: "5432"
+        - name: PGDATABASE
+          value: postgres
+        - name: PGUSER
+          value: postgres
+        - name: PGPASSWORD
+          value: "Lazarus17"
+        - name: LAKEFS_PASSWORD
+          value: "LakeFS17"
+        command:
+        - /bin/bash
+        - -c
+        - |
+          set -e
+          psql -c "CREATE DATABASE lakefs_db;" || echo "Database may already exist"
+          psql -c "CREATE USER lakefs_user WITH PASSWORD '$LAKEFS_PASSWORD';" || echo "User may already exist"
+          psql -c "GRANT ALL PRIVILEGES ON DATABASE lakefs_db TO lakefs_user;"
+          psql -d lakefs_db -c "GRANT ALL ON SCHEMA public TO lakefs_user;"
+          echo "LakeFS database and user created successfully"
+

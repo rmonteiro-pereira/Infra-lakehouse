@@ -1,0 +1,64 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: lakefs
+  namespace: lakefs
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: lakefs
+      sourceRef:
+        kind: HelmRepository
+        name: lakefs
+        namespace: flux-system
+  install:
+    timeout: 10m0s
+  upgrade:
+    timeout: 10m0s
+  values:
+    # LakeFS configuration
+    lakefsConfig: |
+      logging:
+        level: INFO
+      blockstore:
+        type: s3
+        s3:
+          endpoint: http://minio.minio.svc.cluster.local:9000
+          force_path_style: true
+          discover_bucket_region: false
+      auth:
+        encrypt:
+          secret_key: "${LAKEFS_AUTH_ENCRYPT_SECRET_KEY}"
+      database:
+        type: postgres
+        postgres:
+          connection_string: "postgres://lakefs_user:${LAKEFS_DATABASE_PASSWORD}@postgresql.postgres.svc.cluster.local:5432/lakefs_db?sslmode=disable"
+    
+    # Use existing secrets
+    existingSecret: lakefs-secrets
+    
+    # Service configuration
+    service:
+      type: ClusterIP
+      port: 80
+    
+    # Ingress
+    ingress:
+      enabled: true
+      className: nginx
+      hosts:
+        - host: lakefs.vanir-proxmox.duckdns.org
+          paths:
+            - path: /
+              pathType: Prefix
+    
+    # Resources
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "256Mi"
+      limits:
+        cpu: "500m"
+        memory: "512Mi"
+
