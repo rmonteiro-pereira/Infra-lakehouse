@@ -17,7 +17,7 @@ spec:
   upgrade:
     timeout: 10m0s
   values:
-    # LakeFS configuration
+    # LakeFS configuration - database and auth will be set via environment variables
     lakefsConfig: |
       logging:
         level: INFO
@@ -27,15 +27,29 @@ spec:
           endpoint: http://minio.minio.svc.cluster.local:9000
           force_path_style: true
           discover_bucket_region: false
+      database:
+        type: postgres
+      auth:
+        encrypt:
+          secret_key: "lakefs-secret-key-32-bytes-long!"
     
-    # Use existing secrets for database and auth
-    secrets:
-      databaseConnectionString:
-        secretName: lakefs-secrets
-        secretKey: database_connection_string
-      authEncryptSecretKey:
-        secretName: lakefs-secrets
-        secretKey: auth_encrypt_secret_key
+    # Database connection via environment variable
+    extraEnvVars:
+      - name: LAKEFS_DATABASE_POSTGRES_CONNECTION_STRING
+        valueFrom:
+          secretKeyRef:
+            name: lakefs-secrets
+            key: database_connection_string
+      - name: AWS_ACCESS_KEY_ID
+        valueFrom:
+          secretKeyRef:
+            name: lakefs-secrets
+            key: access_key_id
+      - name: AWS_SECRET_ACCESS_KEY
+        valueFrom:
+          secretKeyRef:
+            name: lakefs-secrets
+            key: secret_access_key
     
     # Service configuration
     service:
