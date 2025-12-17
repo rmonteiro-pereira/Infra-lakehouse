@@ -17,7 +17,7 @@ spec:
   upgrade:
     timeout: 10m0s
   values:
-    # LakeFS configuration - database and auth will be set via environment variables
+    # LakeFS configuration with full database connection
     lakefsConfig: |
       logging:
         level: INFO
@@ -29,27 +29,18 @@ spec:
           discover_bucket_region: false
       database:
         type: postgres
+        postgres:
+          connection_string: "postgres://lakefs_user:LakeFS17@postgresql.postgres.svc.cluster.local:5432/lakefs_db?sslmode=disable"
       auth:
         encrypt:
           secret_key: "lakefs-secret-key-32-bytes-long!"
     
-    # Database connection via environment variable
+    # S3 credentials via environment variable
     extraEnvVars:
-      - name: LAKEFS_DATABASE_POSTGRES_CONNECTION_STRING
-        valueFrom:
-          secretKeyRef:
-            name: lakefs-secrets
-            key: database_connection_string
       - name: AWS_ACCESS_KEY_ID
-        valueFrom:
-          secretKeyRef:
-            name: lakefs-secrets
-            key: access_key_id
+        value: "minio"
       - name: AWS_SECRET_ACCESS_KEY
-        valueFrom:
-          secretKeyRef:
-            name: lakefs-secrets
-            key: secret_access_key
+        value: "minio123"
     
     # Service configuration
     service:
