@@ -20,14 +20,14 @@ spec:
     - kustomize:
         images:
           - name: docker.io/bitnami/spark
-            newName: apache/spark
-            newTag: "3.5.1"
+            newName: docker.io/bitnamilegacy/spark
+            newTag: "3.5.0"
   values:
-    # Use Apache official Spark image
+    # Use bitnamilegacy Spark image
     image:
       registry: docker.io
-      repository: apache/spark
-      tag: "3.5.1"
+      repository: bitnamilegacy/spark
+      tag: "3.5.0"
     
     # Master configuration
     master:
