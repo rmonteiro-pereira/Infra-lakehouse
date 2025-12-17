@@ -31,7 +31,8 @@ spec:
     
     # Skip container image verification for non-standard images
     global:
-      skipContainerImageVerification: true
+      security:
+        allowInsecureImages: true
     
     # Master configuration
     master:
