@@ -1,0 +1,67 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: spark
+  namespace: spark
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: spark
+      sourceRef:
+        kind: OCIRepository
+        name: bitnami-spark
+        namespace: flux-system
+  install:
+    timeout: 15m0s
+  upgrade:
+    timeout: 15m0s
+  values:
+    # Master configuration
+    master:
+      replicaCount: 1
+      resources:
+        requests:
+          cpu: "500m"
+          memory: "1Gi"
+        limits:
+          cpu: "2000m"
+          memory: "4Gi"
+      persistence:
+        enabled: true
+        storageClass: local-path
+        size: 10Gi
+    
+    # Worker configuration
+    worker:
+      replicaCount: 2
+      resources:
+        requests:
+          cpu: "500m"
+          memory: "2Gi"
+        limits:
+          cpu: "2000m"
+          memory: "4Gi"
+      persistence:
+        enabled: true
+        storageClass: local-path
+        size: 20Gi
+    
+    # Ingress for Spark UI
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      hostname: spark.vanir-proxmox.duckdns.org
+      path: /
+      pathType: Prefix
+    
+    # Metrics for Prometheus
+    metrics:
+      enabled: true
+      masterAnnotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+      workerAnnotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8081"
+
