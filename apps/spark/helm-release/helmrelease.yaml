@@ -29,6 +29,10 @@ spec:
       repository: bitnamilegacy/spark
       tag: "3.5.0"
     
+    # Skip container image verification for non-standard images
+    global:
+      skipContainerImageVerification: true
+    
     # Master configuration
     master:
       replicaCount: 1
