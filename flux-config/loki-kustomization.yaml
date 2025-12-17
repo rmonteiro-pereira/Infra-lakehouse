@@ -11,6 +11,5 @@ spec:
     kind: GitRepository
     name: infra-lakehouse
   dependsOn:
-    - name: namespaces
     - name: sealed-secrets
 
