@@ -40,13 +40,9 @@ spec:
       type: ClusterIP
       port: 80
     
-    # Ingress enabled for external access
+    # Ingress disabled - using separate ingress resource
     ingress:
-      enabled: true
-      ingressClassName: nginx
-      host: lakefs.vanir-proxmox.duckdns.org
-      annotations:
-        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+      enabled: false
     
     # Resources
     resources:
