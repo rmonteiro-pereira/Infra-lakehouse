@@ -35,13 +35,6 @@ spec:
         encrypt:
           secret_key: "lakefs-secret-key-32-bytes-long!"
     
-    # S3 credentials via environment variable
-    extraEnvVars:
-      - name: AWS_ACCESS_KEY_ID
-        value: "minio"
-      - name: AWS_SECRET_ACCESS_KEY
-        value: "minio123"
-    
     # Service configuration - ClusterIP for Ingress access
     service:
       type: ClusterIP
