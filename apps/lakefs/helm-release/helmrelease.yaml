@@ -43,12 +43,8 @@ spec:
     # Ingress enabled for external access
     ingress:
       enabled: true
-      className: nginx
-      hosts:
-        - host: lakefs.vanir-proxmox.duckdns.org
-          paths:
-            - path: /
-              pathType: Prefix
+      ingressClassName: nginx
+      host: lakefs.vanir-proxmox.duckdns.org
       annotations:
         nginx.ingress.kubernetes.io/proxy-body-size: "0"
     
