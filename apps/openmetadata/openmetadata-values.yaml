@@ -34,15 +34,15 @@ data:
             password:
               secretRef: "openmetadata-db-secret"
               secretKey: "password"
-        
-        # Configure Elasticsearch connection for OpenMetadata chart v1.11.x
-        elasticsearch:
-          host: "elasticsearch-master.elasticsearch.svc.cluster.local"
-          port: 9200
-          scheme: "http"
-          auth:
-            username: "elastic"
-            password:
-              secretRef: "openmetadata-elasticsearch-secret"
-              secretKey: "password"
+      
+      # Configure Elasticsearch connection for OpenMetadata chart v1.11.x
+      # Using external Elasticsearch configuration
+      elasticsearch:
+        host: "elasticsearch-master.elasticsearch.svc.cluster.local"
+        port: 9200
+        scheme: "http"
+        username: "elastic"
+        password:
+          secretRef: "openmetadata-elasticsearch-secret"
+          secretKey: "password"
 
