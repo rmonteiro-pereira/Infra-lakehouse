@@ -41,8 +41,11 @@ data:
         host: "elasticsearch-master.elasticsearch.svc.cluster.local"
         port: 9200
         scheme: "http"
+        searchType: "elasticsearch"
         username: "elastic"
         password:
           secretRef: "openmetadata-elasticsearch-secret"
           secretKey: "password"
+        connectionTimeoutSecs: 5
+        socketTimeoutSecs: 60
 
