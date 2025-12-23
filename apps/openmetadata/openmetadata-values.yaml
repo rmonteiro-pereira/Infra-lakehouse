@@ -34,35 +34,4 @@ data:
             password:
               secretRef: "openmetadata-db-secret"
               secretKey: "password"
-    
-    # Extra environment variables for OpenMetadata
-    # These are applied at the root level of the chart
-    extraEnvVars:
-      - name: SEARCH_TYPE
-        value: "elasticsearch"
-      # Configure Elasticsearch connection via environment variables
-      - name: ELASTICSEARCH_HOST
-        value: "elasticsearch-master.elasticsearch.svc.cluster.local"
-      - name: ELASTICSEARCH_PORT
-        value: "9200"
-      - name: ELASTICSEARCH_SCHEME
-        value: "http"
-      - name: ELASTICSEARCH_USERNAME
-        value: "elastic"
-      - name: ELASTICSEARCH_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: openmetadata-elasticsearch-secret
-            key: password
-      # Configure admin user - change from default admin@open-metadata.org
-      - name: AUTHORIZER_ADMIN_PRINCIPALS
-        value: '["admin"]'
-      - name: AUTHORIZER_PRINCIPAL_DOMAIN
-        value: "vanir-proxmox.duckdns.org"
-      # Configure admin password from secret
-      - name: AUTHORIZER_ADMIN_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: openmetadata-admin-secret
-            key: password
 
