@@ -52,4 +52,15 @@ data:
       extraEnvVars:
         - name: SEARCH_TYPE
           value: "elasticsearch"
+        # Configure admin user - change from default admin@open-metadata.org
+        - name: AUTHORIZER_ADMIN_PRINCIPALS
+          value: '["admin"]'
+        - name: AUTHORIZER_PRINCIPAL_DOMAIN
+          value: "vanir-proxmox.duckdns.org"
+        # Configure admin password from secret
+        - name: AUTHORIZER_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: openmetadata-admin-secret
+              key: password
 
